@@ -19,7 +19,8 @@
     "cordova-plugin-device",
     "cordova-plugin-whitelist",
     "ionic-plugin-keyboard",
-    "cordova-plugin-splashscreen"
+    "cordova-plugin-splashscreen",
+    "cordova-plugin-crosswalk-webview"
   ],
   "cordovaPlatforms": [
     "ios"

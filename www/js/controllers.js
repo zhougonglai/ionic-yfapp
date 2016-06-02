@@ -50,13 +50,13 @@ angular.module('starter.controllers', [])
       {
         title:"创新工业",
         name : "Slide 1",
-        number  : "Slide 1 Content",
+        number  : 10000,
         ripe:2533,
         low:82599
       },{
         title:"亿富科技",
         name : "Slide 2",
-        number  : "Slide 2 Content",
+        number  : 100000,
         ripe:2533,
         low:82599
       }
