@@ -1,5 +1,5 @@
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','ionic-material'])
-.run(function($ionicPlatform,ionicMaterialInk) {
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services',"starter.value","starter.directive",'ionic-material'])
+.run(function($ionicPlatform,$rootScope,$ionicLoading) {
   $ionicPlatform.ready(function() {
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -10,6 +10,24 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','i
       StatusBar.styleDefault();
     }
   });
+  $rootScope.userInfo = {
+
+  };
+  $rootScope.userStruts = $rootScope.userStruts?true:false;
+  $rootScope.setUserStruts = function (boolean) {
+    $rootScope.userStruts = boolean;
+    console.log($rootScope.userStruts);
+  };
+  $rootScope.loading=function(timer){
+    $ionicLoading.show({
+      duration:timer|1000
+    }).then(function () {
+      console.log("loading show! start");
+    });
+  };
+  $rootScope.loadHide = function () {
+    $ionicLoading.hide();
+  };
 })
 
 .config(function($stateProvider, $urlRouterProvider,$ionicConfigProvider) {
@@ -21,30 +39,23 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','i
     templateUrl: 'templates/tabs.html',
     controller: "TabsCtrl"
   })
-  .state('tab.dash', {
+  .state('tab.home', {
     url: '/dash',
     views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
+      'tab-home': {
+        templateUrl: 'templates/tab-home.html',
+        controller: 'Home',
+        controllerAs:"vm"
       }
     }
   })
-  .state('tab.chats', {
-      url: '/chats',
+  .state('tab.list', {
+      url: '/list',
       views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
-        }
-      }
-    })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
+        'tab-list': {
+          templateUrl: 'templates/tab-list.html',
+          controller: 'List',
+          controllerAs:"vm"
         }
       }
     })
@@ -53,7 +64,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','i
     views: {
       'tab-account': {
         templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
+        controller: 'Account',
+        controllerAs:"vm"
       }
     }
   });

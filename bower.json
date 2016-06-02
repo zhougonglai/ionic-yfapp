@@ -6,5 +6,9 @@
     "ionic-material": "^0.4.2",
     "robotodraft": "^1.1.0",
     "jquery": "^2.2.4"
+  },
+  "dependencies": {
+    "angular-messages": "^1.5.6",
+    "angular-resource": "^1.5.6"
   }
 }

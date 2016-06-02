@@ -1,12 +1,5 @@
-<ion-view view-title="首页">
+<ion-view view-title="投资">
   <ion-content has-header="true">
-    <ion-slide-box show-pager="true" does-continue="true" auto-play="true" slide-interval="4000" pager-click="vm.slideChange(index)">
-
-      <ion-slide ng-repeat="item in vm.slides">
-        <img src="img/banner.png" ng-click="vm.slideClick($index)">
-      </ion-slide>
-
-    </ion-slide-box>
     <ion-list type="card" show-delete="false" show-reorder="false" can-swipe="false">
       <div ng-repeat="item in vm.data">
         <ion-item class="item-avatar-left">
@@ -17,7 +10,7 @@
           </div>
         </ion-item>
         <ion-item class="item-body">
-          <div class="row row-wrap">
+          <div class="row row-wrap no-padding">
             <div class="col col-25 col-center">
               {{item.ripe}}%
             </div>
@@ -31,17 +24,17 @@
                 </div>
               </div>
             </div>
-            <div class="col">
-              <div class="row">
-                <div class="col col-33 text-center">
+            <div class="col no-padding">
+              <div class="row no-padding">
+                <div class="col col-33 text-center no-padding">
                   <h6>title</h6>
                   <p>25</p>
                 </div>
-                <div class="col col-33 text-center">
+                <div class="col col-33 text-center no-padding">
                   <h6>title</h6>
                   <p>25</p>
                 </div>
-                <div class="col col-33 text-center">
+                <div class="col col-33 text-center no-padding">
                   <h6>title</h6>
                   <p>25</p>
                 </div>
@@ -51,6 +44,5 @@
         </ion-item>
       </div>
     </ion-list>
-
   </ion-content>
 </ion-view>

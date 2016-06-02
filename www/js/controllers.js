@@ -5,30 +5,72 @@ angular.module('starter.controllers', [])
       console.log("Tabs in");
     });
   }])
-.controller('DashCtrl', function($scope) {})
+  .controller("Home",["$scope","$ionicSlideBoxDelegate","$ionicLoading",function ($scope,$ionicSlideBoxDelegate,$ionicLoading) {
+    $scope.$on("$ionicView.enter",function (e) {
+      console.log("Home in");
+      // $scope.setUserStruts(true);
+    });
 
-.controller('ChatsCtrl', function($scope, Chats) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
 
-  $scope.$on('$ionicView.enter', function(e) {
-    console.log("ChatsCtrl in");
-  });
+    var vm = this;
+    vm.slides = [
+      {
+        title : "Slide 1",
+        data  : "Slide 1 Content"
+      },{
+        title : "Slide 2",
+        data  : "Slide 2 Content"
+      }
+    ];
+    vm.slideChange = function (index) {
+      $ionicSlideBoxDelegate.slide(index,1000);
+    };
+    vm.slideClick = $scope.loading;
 
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
-})
+    vm.data = [
+      {
+        title:"创新工业",
+        name : "Slide 1",
+        number  : "Slide 1 Content",
+        ripe:2533,
+        low:82599
+      },{
+        title:"亿富科技",
+        name : "Slide 2",
+        number  : "Slide 2 Content",
+        ripe:2533,
+        low:82599
+      }
+    ];
 
+  }])
+  .controller("List",["$scope",function ($scope) {
+    var vm = this;
+    vm.data = [
+      {
+        title:"创新工业",
+        name : "Slide 1",
+        number  : "Slide 1 Content",
+        ripe:2533,
+        low:82599
+      },{
+        title:"亿富科技",
+        name : "Slide 2",
+        number  : "Slide 2 Content",
+        ripe:2533,
+        low:82599
+      }
+    ];
+  }])
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('AccountCtrl', function($scope) {
+.controller('Account',["$scope","ionicMaterialInk", function($scope,ionicMaterialInk) {
+  var vm = this;
   $scope.settings = {
     enableFriends: true
   };
-});
+  vm.showInfo = true;
+  ionicMaterialInk.displayEffect();
+}]);
