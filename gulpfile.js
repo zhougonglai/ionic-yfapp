@@ -6,10 +6,14 @@ var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
+var postcss = require("gulp-postcss");
+var autoprefixer = require("autoprefixer");
+
 
 var paths = {
   sass: ['./scss/**/*.scss']
 };
+var browserslist = ["Chrome","iOS","Android","BlackBerry","ChromeAndroid","FirefoxAndroid","OperaMobile","OperaMini"];
 
 gulp.task('default', ['sass']);
 
@@ -17,6 +21,7 @@ gulp.task('sass', function(done) {
   gulp.src('./scss/ionic.app.scss')
     .pipe(sass())
     .on('error', sass.logError)
+    .pipe(postcss([autoprefixer({browsers:["iOS 7","last 3 Chrome versions","last 4 Android versions"]})]))
     .pipe(gulp.dest('./www/css/'))
     .pipe(minifyCss({
       keepSpecialComments: 0

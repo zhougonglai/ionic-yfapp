@@ -109,21 +109,7 @@ ion-content{
     }
   }
   #info{
-    @extend .transition;
-    height: 50%;
-    //transform: translateY(0);
   }
   .list{
-    @extend .transition;
-    //transform: translateY(400%);
-    //position: absolute;
   }
-  //&.show{
-  //  #info{
-  //    transform: translateY(400%);
-  //  }
-  //  .list{
-  //    transform: translateY(0);
-  //  }
-  //}
 }

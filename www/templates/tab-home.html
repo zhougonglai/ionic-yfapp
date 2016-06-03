@@ -1,13 +1,26 @@
-<ion-view view-title="首页">
+<ion-view view-title="首页" animation="slide-left-right">
+  <!--<div class="bar bar-subheader">-->
+    <!--<div class=" button-bar">-->
+      <!--<button class="button button-light button-android" ng-class="{ 'button-positive': demo == 'ios' }" ng-click="setPlatform('ios')">-->
+        <!--iOS-->
+      <!--</button>-->
+      <!--<button class="button button-light button-android" ng-class="{ 'button-positive': demo == 'android' }" ng-click="setPlatform('android')">-->
+        <!--Android-->
+      <!--</button>-->
+      <!--<button class="button button-light button-android" ng-class="{ 'button-positive': demo == 'ionic' }" ng-click="setPlatform('ionic')">-->
+        <!--Ionic-->
+      <!--</button>-->
+    <!--</div>-->
+  <!--</div>-->
   <ion-content has-header="true">
-    <ion-slide-box show-pager="true" does-continue="true" auto-play="true" slide-interval="4000" pager-click="vm.slideChange(index)">
+    <ion-slide-box show-pager="true" does-continue="true" auto-play="true" slide-interval="4000" pager-click="vm.slideChange(index)" style="height:auto;">
 
       <ion-slide ng-repeat="item in vm.slides">
         <img src="img/banner.png" ng-click="vm.slideClick($index)">
       </ion-slide>
 
     </ion-slide-box>
-    <ion-list type="card" show-delete="false" show-reorder="false" can-swipe="false">
+    <ion-list type="card" show-delete="false" show-reorder="false" can-swipe="false" class="animate-ripple" ng-click="vm.goTab2()">
       <div ng-repeat="item in vm.data">
         <ion-item class="item-avatar-left">
           <img src="./img/borrowmark/mark1.png" alt="项目评级">
