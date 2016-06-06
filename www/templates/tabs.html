@@ -8,10 +8,10 @@ navigation history that also transitions its views in and out.
     <ion-nav-bar class="bar-stable bar-positive">
       <ion-nav-back-button></ion-nav-back-button>
       <ion-nav-buttons side="right">
-        <button class="button button-icon button-clear icon" ng-class="{true:'ion-navicon',false:'ion-ios-arrow-thin-left'}['vm.toggleMenu']" ng-click="vm.toggleMenu=!vm.toggleMenu"  menu-toggle="right"></button>
+        <button class="button button-icon button-clear icon" ng-class="{true:'ion-navicon',false:'ion-ios-arrow-thin-right'}[vm.toggleMenu]" ng-click="vm.toggleMenu=!vm.toggleMenu"  menu-toggle="right"></button>
       </ion-nav-buttons>
     </ion-nav-bar>
-    <ion-tabs class="tabs-icon-top tabs-positive">
+    <ion-tabs class="tabs-icon-top tabs-positive tabs-striped">
       <!-- Dashboard Tab -->
       <ion-tab title="首页" icon-off="ion-ios-home-outline" icon-on="ion-ios-home" href="#/tab/dash">
         <ion-nav-view name="tab-home"></ion-nav-view>
@@ -29,10 +29,25 @@ navigation history that also transitions its views in and out.
     </ion-tabs>
 
   </ion-side-menu-content>
-  <ion-side-menu side="right">
-    <ion-content>
-      asdasd
-    </ion-content>
+  <ion-side-menu side="right" width="200">
+    <ion-scroll>
+      <div direction="y" overflow-scroll="true" ng-switch="userStruts">
+        <div ng-switch-when="true">
+          <ion-item class="slide_effect wave no-margin" ng-repeat="item in vm.names|filter:{'userStruts':true}" ui-sref="{{item.rec}}">
+            <i class="icon ion-{{item.name}}"></i>
+            <span>{{item.label}}</span>
+            <span class="sub">{{item.sub}}</span>
+          </ion-item>
+        </div>
+        <div ng-switch-when="false">
+          <ion-item class="slide-effect wave no-margin" ng-repeat="item in vm.names|filter:{'userStruts':false}" ui-sref="{{item.rec}}">
+            <i class="icon ion-{{item.name}}"></i>
+            <span>{{item.label}}</span>
+            <span class="sub">{{item.sub}}</span>
+          </ion-item>
+        </div>
+      </div>
+    </ion-scroll>
   </ion-side-menu>
 </ion-side-menus>
 

@@ -1,0 +1,48 @@
+.cs-top-tabs{
+  $border-color: #f0f0f0 !default;
+  .tabs{
+    height: 40px;
+    line-height: 40px;
+    border: 0;
+    border-top: solid 1px $border-color !important;
+    .tab-item{
+      max-width: 50%;
+    }
+    .tab-item-active{
+      position: relative;
+      &:after{
+        content: '';
+        display: block;
+        position: absolute;
+        left: 25%;
+        bottom: 0;
+        width: 50%;
+        height: 2px;
+      }
+      &.tab-item-energized:after{
+        background: $energized;
+      }
+      &.tab-item-positive:after{
+        background: $positive;
+      }
+      &.tab-item-balanced:after{
+        background: $balanced;
+      }
+      &.tab-item-assertive:after{
+        background: $assertive;
+      }
+      &.tab-item-calm:after{
+        background: $calm;
+      }
+      &.tab-item-royal:after{
+        background: $royal;
+      }
+    }
+  }
+  &+.scroll-content{
+    top: 84px;
+    .platform-cordova.platform-ios &{
+      top: 104px;
+    }
+  }
+}

@@ -6,10 +6,15 @@
     "ionic-material": "^0.4.2",
     "robotodraft": "^1.1.0",
     "jquery": "^2.2.4",
-    "ngCordova": "^0.1.26-alpha"
+    "ngCordova": "^0.1.26-alpha",
+    "ionic-platform-web-client": "^0.7.1"
   },
   "dependencies": {
     "angular-messages": "^1.5.6",
-    "angular-resource": "^1.5.6"
+    "angular-resource": "^1.5.6",
+    "ionic-top-tabs": "^0.1.2",
+    "ion-md-input": "^1.0.4",
+    "ion-ripple": "^1.0.8",
+    "ion-affix": "^1.0.1"
   }
 }

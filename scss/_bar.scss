@@ -1,0 +1,5 @@
+#mybar > .button { font-size: 11px; line-height: 32px; padding: 0 10px; }
+#mybar > .button .icon,
+#mybar > .button .icon:before, #mybar > .button.icon:before, #mybar > .button.icon-left:before, #mybar > .button.icon-right:before{ font-size: 32px; margin-top: 10px; }
+#mybar > .button:first-child,
+#mybar > .button:last-child { border-radius: 0px 0px 0px 0px; }

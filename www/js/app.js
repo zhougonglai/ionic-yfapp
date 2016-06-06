@@ -1,4 +1,14 @@
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services',"starter.value","starter.directive",'ionic-material','ngCordova',"ngResource"])
+angular.module('starter', [
+  'ionic',
+  'starter.controllers',
+  'starter.services',
+  "starter.value",
+  "starter.directive",
+  'ionic-material',
+  'ngCordova',
+  "ngResource",
+  'ionMDRipple'
+])
 .run(function($ionicPlatform,$rootScope,$ionicLoading) {
   $ionicPlatform.ready(function() {
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
@@ -30,7 +40,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services',"s
   };
 })
 
-.config(function($stateProvider, $urlRouterProvider,$ionicConfigProvider) {
+.config(["$stateProvider", "$urlRouterProvider","$ionicConfigProvider","$httpProvider",
+  function($stateProvider, $urlRouterProvider,$ionicConfigProvider,$httpProvider) {
   $ionicConfigProvider.views.maxCache(5);
   $ionicConfigProvider.platform.ios.tabs.style('standard');
   $ionicConfigProvider.platform.ios.tabs.position('bottom');
@@ -53,6 +64,33 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services',"s
     controller: "TabsCtrl",
     controllerAs:"vm"
   })
+  .state("login",{
+    url:"/login",
+    abstract:true,
+    templateUrl:"templates/login/login.html",
+    controller:"Login",
+    controllerAs:"vm"
+  })
+    .state("login.signIn",{
+      url:"/signIn",
+      views:{
+        "sign-in":{
+          templateUrl:"templates/login/sign-in.html",
+          controller:"SignIn",
+          controllerAs:"vm"
+        }
+      }
+    })
+    .state("login.signUp",{
+      url:"/signUp",
+      views:{
+        "sign-up":{
+          templateUrl:"templates/login/sign-up.html",
+          controller:"SignUp",
+          controllerAs:"vm"
+        }
+      }
+    })
   .state('tab.home', {
     url: '/home',
     views: {
@@ -104,6 +142,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services',"s
     }
   });
 
-  $urlRouterProvider.otherwise('/tab/home');
+  // $urlRouterProvider.otherwise('/tab/home');
+  $urlRouterProvider.otherwise('/login/signIn');
 
-});
+  $httpProvider.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded;charset=utf-8";
+}]);

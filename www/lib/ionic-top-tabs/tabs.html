@@ -1,0 +1,7 @@
+<section class="tabs-top tabs-background-light cs-top-tabs">
+  <div class="tab-nav tabs">
+    <a class="tab-item" ng-repeat="item in tabs" ng-class="{'tab-item-active': item.id==activated}" ng-click="active(item.id)">
+      <span class="tab-title">{{item.title}}</span>
+    </a>
+  </div>
+</section>

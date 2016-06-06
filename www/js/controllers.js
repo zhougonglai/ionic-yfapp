@@ -5,10 +5,71 @@ angular.module('starter.controllers', [])
     });
     var vm = this;
     vm.toggleMenu = true;
+    vm.names = [
+      {
+        name:'log-in',
+        label:"用户登陆",
+        sub:"请于安全位置登陆",
+        rec:"login.signIn",
+        userStruts:true
+      },
+      {
+        name:'log-out',
+        label:"安全退出",
+        sub:"轻松理财",
+        rec:"login.signIn",
+        userStruts:false
+      }
+    ];
+
   }])
+
+  .controller("Login",["$scope","ionicMaterialInk",function ($scope,ionicMaterialInk) {
+    $scope.$on("$ionicView.enter",function (e) {
+      ionicMaterialInk.displayEffect();
+    });
+
+    var vm = this;
+    vm.test = "登陆页面";
+    vm.clientSideList = [
+      { text: "Settings", value: "cog" },
+      { text: "Analytics", value: "pie" },
+      { text: "Profile", value: "person" },
+      { text: "Alerts", value: "bell" },
+      { text: "Calendar", value: "calendar" }
+    ];
+
+    vm.data = "cog";
+  }])
+  .controller("SignIn",["$scope","response","ionicMaterialInk","$http",function ($scope,response,ionicMaterialInk,$http) {
+    $scope.$on("$ionicView.enter",function (e) {
+      console.log("SignIn success");
+    });
+    var vm = this;
+    vm.user={};
+    vm.pw = {
+      icon:true,
+      type:"password"
+    };
+    vm.togglePW = function (pw) {
+      vm.pw.icon = !pw.icon;
+      vm.pw.type = (vm.pw.icon)?"password":"text";
+    };
+
+    vm.signIn = function (user) {
+      // var a = response.phone(vm.user.phone,vm.user.pw).save();
+      var signIn = $http({method:"POST",url:"192.168.0.141:8080/wechat/signin",cache:true,params:{username:user.phone,password:user.pw}});
+      alert(signIn.toString());
+    };
+
+  }])
+  .controller("SignUp",["$scope",function ($scope) {
+    var vm = this;
+    vm.test = "注册成功";
+  }])
+
   .controller("Home",["$scope","$ionicSlideBoxDelegate","ionicMaterialMotion","$ionicTabsDelegate",function ($scope,$ionicSlideBoxDelegate,ionicMaterialMotion,$ionicTabsDelegate) {
     $scope.$on("$ionicView.enter",function (e) {
-      console.log("Home in");
       // $scope.setUserStruts(true);
       ionicMaterialMotion.ripple();
     });
@@ -89,7 +150,7 @@ angular.module('starter.controllers', [])
   var vm = this;
   vm.test = "账户充值";
 }])
-  .controller("BindCard",["$scope",function ($scope) {
-    var vm = this;
-    vm.test= "用户绑卡";
-  }]);
+.controller("BindCard",["$scope",function ($scope) {
+  var vm = this;
+  vm.test= "用户绑卡";
+}]);

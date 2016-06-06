@@ -1,0 +1,28 @@
+{
+  "name": "ion-ripple",
+  "main": "ion-ripple.js",
+  "version": "1.0.8",
+  "homepage": "https://github.com/vitaliy-bobrov/ionic-ripple",
+  "authors": [
+    "Vitaliy Bobrov"
+  ],
+  "description": "A standalone Ionic implementation of the Google Material Design ripple effect.",
+  "moduleType": [],
+  "keywords": [
+    "ionic",
+    "mobile",
+    "html5",
+    "cordova",
+    "phonegap",
+    "angularjs",
+    "angular",
+    "ripple",
+    "google",
+    "material"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules"
+  ]
+}

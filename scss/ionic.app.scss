@@ -23,4 +23,14 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 @import "www/lib/ionic-material/src/scss/index";
 
+@import "www/lib/ionic-top-tabs/tabs";
+
+@import "www/lib/ion-ripple/ion-ripple.scss";
+
 @import "scss/base";
+
+@import "fab";
+
+@import "scroll";
+
+@import "bg";
