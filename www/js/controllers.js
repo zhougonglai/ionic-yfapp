@@ -57,9 +57,11 @@ angular.module('starter.controllers', [])
     };
 
     vm.signIn = function (user) {
-      // var a = response.phone(vm.user.phone,vm.user.pw).save();
-      var signIn = $http({method:"POST",url:"192.168.0.141:8080/wechat/signin",cache:true,params:{username:user.phone,password:user.pw}});
-      alert(signIn.toString());
+      console.log(user);
+      var a = response.phone(user.phone,"d4969f0b6a6426dad0571a6493d6d4d9").get();
+      console.log(a);
+      // var signIn = $http({method:"POST",url:"http://localhost:8100/wechat/signin",cache:true,params:{username:user.phone,password:user.pw}});
+      // console.log(signIn);
     };
 
   }])

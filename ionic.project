@@ -1,6 +1,12 @@
 {
   "name": "亿富贷",
   "app_id": "bae4f429",
+  "proxies": [
+      {
+        "path": "/mobile",
+        "proxyUrl": "http://apis.juhe.cn/mobile"
+      }
+  ],
   "gulpStartupTasks": [
     "sass",
     "watch"
