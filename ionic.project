@@ -2,10 +2,10 @@
   "name": "亿富贷",
   "app_id": "bae4f429",
   "proxies": [
-      {
-        "path": "/wechat",
-        "proxyUrl": "http://localhost:8080/wechat"
-      }
+    {
+      "path": "/wechat",
+      "proxyUrl": "http://localhost:8080/wechat"
+    }
   ],
   "gulpStartupTasks": [
     "sass",
