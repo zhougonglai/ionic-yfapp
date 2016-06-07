@@ -4,12 +4,15 @@ angular.module('starter', [
   'starter.services',
   "starter.value",
   "starter.directive",
+  "ngAnimate",
+  "ngFx",
   'ionic-material',
   'ngCordova',
   "ngResource",
   'ionMDRipple'
 ])
-.run(function($ionicPlatform,$rootScope,$ionicLoading) {
+.run(["$ionicPlatform","$rootScope","$ionicLoading","$ionicPopup", "$timeout",
+  function($ionicPlatform,$rootScope,$ionicLoading,$ionicPopup, $timeout) {
   $ionicPlatform.ready(function() {
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -38,7 +41,10 @@ angular.module('starter', [
   $rootScope.loadHide = function () {
     $ionicLoading.hide();
   };
-})
+
+
+
+}])
 
 .config(["$stateProvider", "$urlRouterProvider","$ionicConfigProvider","$httpProvider",
   function($stateProvider, $urlRouterProvider,$ionicConfigProvider,$httpProvider) {
@@ -55,6 +61,8 @@ angular.module('starter', [
 
   $ionicConfigProvider.platform.ios.views.transition('ios');
   $ionicConfigProvider.platform.android.views.transition('android');
+
+  var phoneMach = "^((13[0-9])|(14[5|7])|(15[0|1|2|3|5|6|7|8|9])|(17[6|7|8])|18[0-9])\\d{8}|(170[0|5|9]\\d{7})$";
 
   $stateProvider
   .state('tab', {
@@ -82,7 +90,7 @@ angular.module('starter', [
       }
     })
     .state("login.signUp",{
-      url:"/signUp",
+      url:"/signUp?{friend:"+phoneMach+"}&{phone:"+phoneMach+"}",
       views:{
         "sign-up":{
           templateUrl:"templates/login/sign-up.html",

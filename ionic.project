@@ -3,8 +3,8 @@
   "app_id": "bae4f429",
   "proxies": [
       {
-        "path": "/mobile",
-        "proxyUrl": "http://apis.juhe.cn/mobile"
+        "path": "/wechat",
+        "proxyUrl": "http://localhost:8080/wechat"
       }
   ],
   "gulpStartupTasks": [

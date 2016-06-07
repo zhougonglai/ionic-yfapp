@@ -27,10 +27,12 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 @import "www/lib/ion-ripple/ion-ripple.scss";
 
-@import "scss/base";
+@import "style/base";
 
-@import "fab";
+@import "style/fab";
 
-@import "scroll";
+@import "style/scroll";
 
-@import "bg";
+@import "style/bg";
+
+@import "style/step";

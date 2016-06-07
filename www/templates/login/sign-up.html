@@ -1,14 +1,72 @@
 <ion-view title="注册">
   <ion-content>
-    <div class="list">
-      <label class="item item-input item-floating-label item-icon-right">
-        <i class="icon ion-iphone positive"></i>
-        <span class="input-label">手机号</span>
-        <input type="text" placeholder="账号" ng-model="vm.user.phone">
-      </label>
+    <form name="sign_up" ng-submit="vm.next(vm.user)" style="position: relative;z-index:3;">
+        <div class="list list-inset">
+          <!-- step 1-->
+          <div ng-hide=" vm.step != 1" class="fx-zoom-up fx-speed-1000 fx-duration-2000 fx-ease-in-out">
+            <label class="item item-input item-floating-label item-icon-right">
+              <i class="icon ion-iphone positive"></i>
+              <span class="input-label">手机号</span>
+              <input type="text" placeholder="账号" ng-model="vm.user.phone">
+            </label>
+            <label class="item item-input item-floating-label item-icon-right">
+              <i class="icon ion-iphone positive"></i>
+              <span class="input-label">推荐人手机号</span>
+              <input type="text" placeholder="推荐人手机号" ng-model="vm.user.friend">
+            </label>
+          </div>
+          <!-- step 2 -->
+          <div ng-hide="vm.step != 2" class="fx-zoom-up fx-speed-1000 fx-duration-2000 fx-ease-in-out">
+            <label class="item item-button-right item-input-inset item-input-wrapper">
+              <input placeholder="验证码" type="text" style="border-bottom:1px solid #ccc"/>
+              <button class="button button-positive ink" type="button">
+                <i class="icon ion-email"></i>
+              </button>
+            </label>
+            <label class="item item-input item-floating-label item-icon-right">
+              <i class="icon positive" ng-class="{true:'ion-ios-eye',false:'ion-ios-eye-outline'}[vm.pw.icon]" on-hold="vm.togglePW(vm.pw)" on-release="vm.togglePW(vm.pw)"></i>
+              <span class="input-label">密码</span>
+              <input type="{{vm.pw.type}}" placeholder="密码" ng-model="vm.user.pw">
+            </label>
+            <label class="item item-input item-floating-label item-icon-right">
+              <i class="icon positive" ng-class="{true:'ion-ios-eye',false:'ion-ios-eye-outline'}[vm.pws.icon]" on-hold="vm.togglePWs(vm.pws)" on-release="vm.togglePWs(vm.pws)"></i>
+              <span class="input-label">确认密码</span>
+              <input type="{{vm.pws.type}}" placeholder="重复密码" ng-model="vm.user.pws">
+            </label>
+          </div>
+          <!-- step 3 -->
+          <div ng-hide="vm.step != 3" class="fx-zoom-up fx-speed-1000 fx-duration-2000 fx-ease-in-out">
+            第三步
+          </div>
+        </div>
+        <div class="padding-left padding-right">
+          <button type="submit" class="button button-block button-flat button-positive">{{vm.confirm}}</button>
+        </div>
+    </form>
+
+    <div class="space">
+      <div class="ship">
+        <div class="ship-rotate">
+          <div class="pod"></div>
+          <div class="fuselage"></div>
+        </div>
+      </div>
+      <div class="ship-shadow"></div>
+      <div class="mars">
+        <div class="tentacle"></div>
+        <div class="flag">
+          <div class="small-tentacle"></div>
+        </div>
+        <div class="planet">
+          <div class="surface"></div>
+          <div class="crater1"></div>
+          <div class="crater2"></div>
+          <div class="crater3"></div>
+        </div>
+      </div>
+      <div class="test"></div>
     </div>
-    <div class="padding-left padding-right">
-      <button type="submit" class="button button-block button-flat button-positive">下一步</button>
-    </div>
+
+
   </ion-content>
 </ion-view>
