@@ -12575,41 +12575,6 @@ a {
 .button {
   overflow: hidden !important; }
 
-.cs-top-tabs .tabs {
-  height: 40px;
-  line-height: 40px;
-  border: 0;
-  border-top: solid 1px #f0f0f0 !important; }
-  .cs-top-tabs .tabs .tab-item {
-    max-width: 50%; }
-  .cs-top-tabs .tabs .tab-item-active {
-    position: relative; }
-    .cs-top-tabs .tabs .tab-item-active:after {
-      content: '';
-      display: block;
-      position: absolute;
-      left: 25%;
-      bottom: 0;
-      width: 50%;
-      height: 2px; }
-    .cs-top-tabs .tabs .tab-item-active.tab-item-energized:after {
-      background: #ffc900; }
-    .cs-top-tabs .tabs .tab-item-active.tab-item-positive:after {
-      background: #387ef5; }
-    .cs-top-tabs .tabs .tab-item-active.tab-item-balanced:after {
-      background: #33cd5f; }
-    .cs-top-tabs .tabs .tab-item-active.tab-item-assertive:after {
-      background: #ef473a; }
-    .cs-top-tabs .tabs .tab-item-active.tab-item-calm:after {
-      background: #11c1f3; }
-    .cs-top-tabs .tabs .tab-item-active.tab-item-royal:after {
-      background: #886aea; }
-
-.cs-top-tabs + .scroll-content {
-  top: 84px; }
-  .platform-cordova.platform-ios .cs-top-tabs + .scroll-content {
-    top: 104px; }
-
 [ion-ripple] {
   position: relative;
   overflow: hidden !important; }
@@ -12739,6 +12704,9 @@ ion-content {
       height: 128px;
       margin: 0 auto 0;
       border-radius: 100px; }
+
+.title-center {
+  text-align: center !important; }
 
 .animated {
   -webkit-animation-duration: 0.5s;
@@ -13664,35 +13632,11 @@ a.follow {
     color: #41EFB6;
     border-color: #41EFB6; }
 
-body .logo {
+.logo {
   color: white;
   font-size: 60px;
   margin-top: 100px;
   display: block; }
-
-body h3 {
-  font-family: 'Nunito', sans-serif !important;
-  color: #FFFFFF;
-  font-size: 17px;
-  font-weight: 900;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
-  padding-bottom: 10px;
-  line-height: 25px;
-  margin-bottom: 30px; }
-
-body h1 {
-  font-family: 'Nunito', sans-serif !important;
-  color: #38F1CF;
-  font-size: 30px;
-  line-height: 25px;
-  margin-bottom: 30px; }
-
-body h2 {
-  font-family: 'Nunito', sans-serif !important;
-  color: white;
-  font-size: 18px;
-  line-height: 25px;
-  margin-bottom: 30px; }
 
 .pad {
   width: 80%;
@@ -13732,7 +13676,6 @@ ion-side-menu .item {
 ion-side-menu i {
   font-size: 22px;
   padding: 10px;
-  top: 28px;
   padding-left: 19px;
   opacity: 0;
   left: 0;

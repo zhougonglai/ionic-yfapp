@@ -1,6 +1,45 @@
 <ion-view view-title="用户绑卡" animation="slide-left-right">
   <ion-content has-header="true">
-    用户绑卡
-    <div>{{vm.test}}</div>
+    <div class="list card">
+      <label class="item item-input item-select">
+        <div class="input-label">选择要绑定的银行</div>
+        <select>
+          <option>Blue</option>
+          <option selected>Green</option>
+          <option>Red</option>
+        </select>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label">开户城市</div>
+        <select>
+          <option>Blue</option>
+          <option selected>Green</option>
+          <option>Red</option>
+        </select>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label">市区</div>
+        <select>
+          <option>Blue</option>
+          <option selected>Green</option>
+          <option>Red</option>
+        </select>
+      </label>
+
+      <label class="item item-input item-floating-label item-icon-right">
+        <i class="icon ion-iphone positive"></i>
+        <span class="input-label">手机号</span>
+        <input type="text" placeholder="银行卡预留手机号">
+      </label>
+
+      <label class="item item-input item-floating-label item-icon-right">
+        <i class="icon ion-iphone positive"></i>
+        <span class="input-label">手机号</span>
+        <input type="text" placeholder="账号">
+      </label>
+    </div>
+    <div class="padding-left padding-right">
+      <button type="submit" class="button button-block button-flat button-positive">{{vm.confirm}}</button>
+    </div>
   </ion-content>
 </ion-view>

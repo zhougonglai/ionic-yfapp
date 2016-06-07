@@ -1,7 +1,7 @@
 <ion-view view-title="投资" animation="slide-left-right">
   <ion-content has-header="true">
     <ion-list type="card" show-delete="false" show-reorder="false" can-swipe="false" class="animate-ripple">
-      <div ng-repeat="item in vm.data">
+      <div ng-repeat="item in vm.data" ui-sref="tab.detail({id:item.id})">
         <ion-item class="item-avatar-left">
           <img src="./img/borrowmark/mark1.png" alt="项目评级">
           <div >

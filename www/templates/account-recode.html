@@ -1,6 +1,32 @@
 <ion-view view-title="账户充值" animation="slide-left-right">
   <ion-content has-header="true">
-    账户充值
-    <div>{{vm.test}}</div>
+    <div class="list card">
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Lightsaber
+        </div>
+        <select>
+          <option>Blue</option>
+          <option selected>Green</option>
+          <option>Red</option>
+        </select>
+      </label>
+
+      <label class="item item-input item-floating-label item-icon-right">
+        <i class="icon ion-iphone positive"></i>
+        <span class="input-label">手机号</span>
+        <input type="text" placeholder="账号">
+      </label>
+
+      <label class="item item-input item-floating-label item-icon-right">
+        <i class="icon positive" ng-class="{true:'ion-locked',false:'ion-unlocked'}[vm.userInfo.lock]" on-hold="vm.toggleLock(vm.userInfo)" on-release="vm.toggleLock(vm.userInfo)"></i>
+        <span class="input-label">支付密码</span>
+        <input type="{{vm.userInfo.pwType}}" placeholder="密码">
+      </label>
+    </div>
+
+    <div class="padding-left padding-right">
+      <button type="submit" class="button button-block button-flat button-positive">{{vm.confirm}}</button>
+    </div>
   </ion-content>
 </ion-view>

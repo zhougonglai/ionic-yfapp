@@ -79,26 +79,26 @@ angular.module('starter', [
     controller:"Login",
     controllerAs:"vm"
   })
-    .state("login.signIn",{
-      url:"/signIn",
-      views:{
-        "sign-in":{
-          templateUrl:"templates/login/sign-in.html",
-          controller:"SignIn",
-          controllerAs:"vm"
-        }
+  .state("login.signIn",{
+    url:"/signIn",
+    views:{
+      "sign-in":{
+        templateUrl:"templates/login/sign-in.html",
+        controller:"SignIn",
+        controllerAs:"vm"
       }
-    })
-    .state("login.signUp",{
-      url:"/signUp?{friend:"+phoneMach+"}&{phone:"+phoneMach+"}",
-      views:{
-        "sign-up":{
-          templateUrl:"templates/login/sign-up.html",
-          controller:"SignUp",
-          controllerAs:"vm"
-        }
+    }
+  })
+  .state("login.signUp",{
+    url:"/signUp?{friend:"+phoneMach+"}&{phone:"+phoneMach+"}",
+    views:{
+      "sign-up":{
+        templateUrl:"templates/login/sign-up.html",
+        controller:"SignUp",
+        controllerAs:"vm"
       }
-    })
+    }
+  })
   .state('tab.home', {
     url: '/home',
     views: {
@@ -118,7 +118,17 @@ angular.module('starter', [
           controllerAs:"vm"
         }
       }
-    })
+  })
+  .state("tab.detail",{
+    url:"/detail/:id",
+    views:{
+      "tab-list":{
+        templateUrl:"templates/tab-detail.html",
+        controller:"Detail",
+        controllerAs:"vm"
+      }
+    }
+  })
   .state('tab.account', {
     url: '/account',
     views: {
@@ -150,8 +160,8 @@ angular.module('starter', [
     }
   });
 
-  // $urlRouterProvider.otherwise('/tab/home');
-  $urlRouterProvider.otherwise('/login/signIn');
+  $urlRouterProvider.otherwise('/tab/home');
+  // $urlRouterProvider.otherwise('/login/signIn');
 
   $httpProvider.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded;charset=utf-8";
 }]);

@@ -197,12 +197,14 @@ angular.module('starter.controllers', [])
     var vm = this;
     vm.data = [
       {
+        id:25,
         title:"创新工业",
         name : "Slide 1",
         number  : 10000,
         ripe:2533,
         low:82599
       },{
+        id:42,
         title:"亿富科技",
         name : "Slide 2",
         number  : 100000,
@@ -211,6 +213,13 @@ angular.module('starter.controllers', [])
       }
     ];
   }])
+.controller("Detail",["$scope","$stateParams",function ($scope,$stateParams) {
+  var vm = this;
+  vm.test = "详情页 成功";
+  $scope.$on("$ionicView.enter",function (e) {
+    console.log("详情页..enter",$stateParams);
+  });
+}])
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
   $scope.chat = Chats.get($stateParams.chatId);
 })
@@ -229,6 +238,15 @@ angular.module('starter.controllers', [])
 .controller("Recode",["$scope",function ($scope) {
   var vm = this;
   vm.test = "账户充值";
+  vm.userInfo = {
+    lock:true,
+    pwType:"password"
+  };
+
+  vm.toggleLock = function (userInfo) {
+    vm.userInfo.lock = !userInfo.lock;
+    vm.userInfo.pwType = vm.userInfo.lock?"password":"text";
+  }
 }])
 .controller("BindCard",["$scope",function ($scope) {
   var vm = this;
