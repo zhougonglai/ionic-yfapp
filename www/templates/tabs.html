@@ -13,7 +13,7 @@ navigation history that also transitions its views in and out.
     </ion-nav-bar>
     <ion-tabs class="tabs-icon-top tabs-positive tabs-striped">
       <!-- Dashboard Tab -->
-      <ion-tab title="首页" icon-off="ion-ios-home-outline" icon-on="ion-ios-home" href="#/tab/dash">
+      <ion-tab title="首页" icon-off="ion-ios-home-outline" icon-on="ion-ios-home" href="#/tab/home">
         <ion-nav-view name="tab-home"></ion-nav-view>
       </ion-tab>
 
@@ -31,7 +31,7 @@ navigation history that also transitions its views in and out.
   </ion-side-menu-content>
   <ion-side-menu side="right" width="200">
     <ion-scroll>
-      <div direction="y" overflow-scroll="true" ng-switch="userStruts">
+      <div direction="y" overflow-scroll="true" ng-switch="user.on">
         <div ng-switch-when="true">
           <ion-item class="slide_effect wave no-margin" ng-repeat="item in vm.names|filter:{'userStruts':true}" ui-sref="{{item.rec}}">
             <i class="icon ion-{{item.name}}"></i>

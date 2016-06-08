@@ -27,6 +27,12 @@
           <span class="input-label">密码</span>
           <input type="{{vm.pw.type}}" placeholder="密码" ng-model="vm.user.pw">
         </label>
+        <div class="item item-checkbox">
+          <label class="checkbox">
+            <input type="checkbox" ng-model="vm.user.on">
+          </label>
+          7天内快捷登陆
+        </div>
       </div>
       <div class="padding-left padding-right">
         <button type="submit" class="button button-block button-flat button-positive">登陆</button>

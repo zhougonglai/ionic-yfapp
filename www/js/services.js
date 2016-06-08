@@ -12,7 +12,34 @@ angular.module('starter.services', [])
       user:user
     }
   }])
-  .service("popup",["$ionicPopup", "$timeout",function ($ionicPopup, $timeout) {
+  .factory("local",["$cookies",function ($cookies) {
+    var local = {};
+    local.get = function(key){
+      return $cookies.get(key);
+    };
+    local.getObj = function (key) {
+      return $cookies.getObject(key);
+    };
+    local.getAll = function () {
+      return $cookies.getAll();
+    };
+    local.put = function (key,value) {
+      var date = new Date();
+      date.setDate(date.getDate()+7);
+      $cookies.put(key,value,{expires:date});
+    };
+    local.putObj = function (key, value) {
+      var date = new Date();
+      date.setDate(date.getDate()+7);
+      $cookies.putObject(key,value,{expires:date});
+    };
+    local.remove = function (key) {
+      $cookies.remove(key);
+    };
+    return local;
+  }])
+  .service("popup",["$ionicPopup", "$timeout","$ionicLoading",
+    function ($ionicPopup, $timeout,$ionicLoading) {
     var base = {
       title:"标题",
       cssClass:"",
@@ -58,11 +85,23 @@ angular.module('starter.services', [])
       var config = angular.extend(base,{scope:null,buttons:buttons});
       $ionicPopup.show(angular.extend(config,param)).then(fun.callback);
     }
+
+    function loading(timer,fun) {
+      $ionicLoading.show({
+        duration:timer|1000
+      }).then(fun);
+    }
+
+    function loadHide() {
+      $ionicLoading.hide();
+    }
     this.popup={
       alert:alert,
       confirm:confirm,
       prompt:prompt,
-      custom:custom
+      custom:custom,
+      loading:loading,
+      loadHide:loadHide
     }
   }])
 ;

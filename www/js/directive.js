@@ -96,37 +96,15 @@ angular.module("starter.directive",[])
     });
   }
 })
-
-
-
-.directive("topTabs",["$timeout",function ($timeout) {
-  var directive = {
-    restrict: 'E',
-    scope: {
-      tabs: '=',
-      activated: '='
-    },
-    required: 'type',
-    replace: true,
-    template: '<section class="tabs-top tabs-background-light cs-top-tabs">' +
-    '<div class="tab-nav tabs">' +
-    '<a class="tab-item" ng-repeat="item in tabs" ng-class="{\'tab-item-active\': item.id==activated}" ng-click="active(item.id)">' +
-    '<span class="tab-title">{{item.title}}</span>' +
-    '</a>' +
-    '</div>' +
-    '</section>',
-    link: function(scope, element, attr) {
-      $timeout(function() {
-        var type = attr.type;
-
-        element.find('a').addClass('tab-item-' + type);
-      }, 100);
-
-      scope.active = function(id) {
-        scope.activated = id;
-      };
+  //filter
+.filter("floor",function(){
+  return function(input,number){
+    if(angular.isNumber(number)){
+      return Math.floor(input*Math.pow(10,number))/Math.pow(10,number);
+    }else if(angular.isUndefined(number)&&input){
+      return Math.floor(input);
+    }else{
+      return 0.00;
     }
   };
-
-  return directive;
-}]);
+});

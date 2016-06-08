@@ -5,45 +5,37 @@ angular.module('starter', [
   "starter.value",
   "starter.directive",
   "ngAnimate",
+  "ngCookies",
   "ngFx",
   'ionic-material',
   'ngCordova',
   "ngResource",
   'ionMDRipple'
 ])
-.run(["$ionicPlatform","$rootScope","$ionicLoading","$ionicPopup", "$timeout",
-  function($ionicPlatform,$rootScope,$ionicLoading,$ionicPopup, $timeout) {
+.run(["$ionicPlatform","$rootScope","local",
+  function($ionicPlatform,$rootScope,local) {
   $ionicPlatform.ready(function() {
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
-
     }
     if (window.StatusBar) {
       StatusBar.styleDefault();
     }
   });
-  $rootScope.userInfo = {
-
+  //快捷登陆凭证
+  var user = local.getObj("user");
+  if(angular.isDefined(user)){
+    $rootScope.user = user;
+  }else{
+    $rootScope.user = {
+      on:false
+    }
+  }
+  $rootScope.setUserStruts = function (config,boolean) {
+    $rootScope.user = config;
+    $rootScope.user.on = boolean;
   };
-  $rootScope.userStruts = $rootScope.userStruts?true:false;
-  $rootScope.setUserStruts = function (boolean) {
-    $rootScope.userStruts = boolean;
-    console.log($rootScope.userStruts);
-  };
-  $rootScope.loading=function(timer){
-    $ionicLoading.show({
-      duration:timer|1000
-    }).then(function () {
-      console.log("loading show! start");
-    });
-  };
-  $rootScope.loadHide = function () {
-    $ionicLoading.hide();
-  };
-
-
-
 }])
 
 .config(["$stateProvider", "$urlRouterProvider","$ionicConfigProvider","$httpProvider",
@@ -160,8 +152,8 @@ angular.module('starter', [
     }
   });
 
-  $urlRouterProvider.otherwise('/tab/home');
+  $urlRouterProvider.otherwise('/tab/account');
   // $urlRouterProvider.otherwise('/login/signIn');
-
+  // $urlRouterProvider.otherwise('/login/signUp');
   $httpProvider.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded;charset=utf-8";
 }]);

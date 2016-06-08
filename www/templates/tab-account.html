@@ -3,27 +3,30 @@
 
     <div id="profile-info" class="card" ng-click="vm.showInfo=!vm.showInfo" ng-class="{true:'show'}[vm.showInfo]">
       <div id="top" class="rip">
-        <img src="img/adam.jpg" alt="头像" id="profile-image">
-        <h3 class="text-white">Max</h3>
-        <span class="text-white">Co-creator of ....</span>
+        <!--<img src="img/logo.png" alt="头像" id="profile-image">-->
+        <div class="account-logo">
+          <i class="icon ion-person light"></i>
+        </div>
+        <h3 class="text-white">{{user.username}}</h3>
+        <span class="text-white">轻松理财,轻松贷</span>
       </div>
 
       <div id="info" class="row row-wrap">
         <div class="col col-50 no-padding">
           <div class="col">账户资产</div>
-          <div class="col">124124</div>
+          <div class="col">{{user.invSum|floor:2}}</div>
         </div>
         <div class="col col-50 no-padding">
           <div class="col">累计收益</div>
-          <div class="col">4225</div>
+          <div class="col">{{user.interest|floor:2}}</div>
         </div>
         <div class="col col-50 no-padding">
           <div class="col">账户余额</div>
-          <div class="col">242.2</div>
+          <div class="col">{{user.inusemoney|floor:2}}</div>
         </div>
         <div class="col col-50 no-padding">
           <div class="col">用户积分</div>
-          <div class="col">124</div>
+          <div class="col">{{user.integralSum|floor:0}}</div>
         </div>
       </div>
       <div class="list animate-ripple">

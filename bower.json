@@ -12,10 +12,9 @@
   "dependencies": {
     "angular-messages": "^1.5.6",
     "angular-resource": "^1.5.6",
-    "ionic-top-tabs": "^0.1.2",
-    "ion-md-input": "^1.0.4",
     "ion-ripple": "^1.0.8",
     "ion-affix": "^1.0.1",
-    "ngFx": "ng-fx#^1.1.0"
+    "ngFx": "ng-fx#^1.1.0",
+    "angular-cookies": "^1.5.6"
   }
 }

@@ -12622,6 +12622,9 @@ a {
 .popup-title {
   color: black; }
 
+.scroll-content > .scroll {
+  height: 100%; }
+
 .bar-stable button.back-button {
   max-width: 100px;
   width: 85px; }
@@ -12698,12 +12701,22 @@ ion-content {
     position: relative;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.7);
     padding-top: 30px; }
-    #profile-info #top #profile-image {
-      border: 1px solid #fff;
-      width: 128px;
-      height: 128px;
-      margin: 0 auto 0;
-      border-radius: 100px; }
+    #profile-info #top .account-logo {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+      align-items: center; }
+      #profile-info #top .account-logo > i {
+        font-size: 100px;
+        border: 1px solid;
+        border-radius: 50%;
+        width: 110px;
+        height: 110px; }
 
 .title-center {
   text-align: center !important; }
