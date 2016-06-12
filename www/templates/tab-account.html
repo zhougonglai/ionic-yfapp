@@ -7,26 +7,26 @@
         <div class="account-logo">
           <i class="icon ion-person light"></i>
         </div>
-        <h3 class="text-white">{{user.username}}</h3>
+        <h3 class="text-white">{{user.username|mask:user.on}}</h3>
         <span class="text-white">轻松理财,轻松贷</span>
       </div>
 
       <div id="info" class="row row-wrap">
         <div class="col col-50 no-padding">
           <div class="col">账户资产</div>
-          <div class="col">{{user.invSum|floor:2}}</div>
+          <div class="col">{{user.invSum|floor:2|mask:user.on}}</div>
         </div>
         <div class="col col-50 no-padding">
           <div class="col">累计收益</div>
-          <div class="col">{{user.interest|floor:2}}</div>
+          <div class="col">{{user.interest|floor:2|mask:user.on}}</div>
         </div>
         <div class="col col-50 no-padding">
           <div class="col">账户余额</div>
-          <div class="col">{{user.inusemoney|floor:2}}</div>
+          <div class="col">{{user.inusemoney|floor:2|mask:user.on}}</div>
         </div>
         <div class="col col-50 no-padding">
           <div class="col">用户积分</div>
-          <div class="col">{{user.integralSum|floor:0}}</div>
+          <div class="col">{{user.integralSum|floor:0|mask:user.on}}</div>
         </div>
       </div>
       <div class="list animate-ripple">
@@ -38,7 +38,7 @@
           用户绑卡
           <i class="icon ion-ios-arrow-forward"></i>
         </a>
-        <a class="item item-icon-right">
+        <a class="item item-icon-right" ng-click="login(true)">
           好友推荐
           <i class="icon ion-ios-arrow-forward"></i>
         </a>

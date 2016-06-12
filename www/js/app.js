@@ -12,8 +12,8 @@ angular.module('starter', [
   "ngResource",
   'ionMDRipple'
 ])
-.run(["$ionicPlatform","$rootScope","local",
-  function($ionicPlatform,$rootScope,local) {
+.run(["$ionicPlatform","$rootScope","local","$ionicModal","loginService",
+  function($ionicPlatform,$rootScope,local,$ionicModal,loginService) {
   $ionicPlatform.ready(function() {
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -25,6 +25,7 @@ angular.module('starter', [
   });
   //快捷登陆凭证
   var user = local.getObj("user");
+
   if(angular.isDefined(user)){
     $rootScope.user = user;
   }else{
@@ -34,7 +35,37 @@ angular.module('starter', [
   }
   $rootScope.setUserStruts = function (config,boolean) {
     $rootScope.user = config;
+    $rootScope.setUserOn(boolean);
+  };
+  $rootScope.saveUserStruts =  function () {
+    local.putObj("user",$rootScope.user);
+  };
+  $rootScope.setUserOn = function (boolean) {
     $rootScope.user.on = boolean;
+  };
+  $rootScope.resetUserOn = function(){
+    $rootScope.user.on = angular.isNumber($rootScope.user.on)?0:false;
+  };
+
+  $ionicModal.fromTemplateUrl("templates/tmpl/model.html",{
+    scope:$rootScope,
+    animation:"slide-in-up"
+  }).then(function (modal) {
+    $rootScope.modal = modal;
+    loginService.set($rootScope.modal,$rootScope.setUserStruts,$rootScope.login);
+  });
+  $rootScope.login = function (open) {
+    open?($rootScope.modal.show()):($rootScope.modal.hide());
+  };
+  $rootScope.checkUser = function (fun) {
+    response.check($rootScope.user.phone).get(function (res) {
+      if(!res.check){
+        $rootScope.resetUserOn();
+        $rootScope.login(true);
+      }else if(res.check){
+        fun();
+      }
+    });
   };
 }])
 

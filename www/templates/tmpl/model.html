@@ -1,0 +1,49 @@
+<ion-modal-view>
+  <ion-header-bar align-title="center" class="bar-positive">
+    <h1 class="title">登陆</h1>
+    <button class="button button-clear icon ion-close" ng-click="login(false)"></button>
+  </ion-header-bar>
+  <ion-content>
+    <div class="bg-content">
+      <div class="planet">
+        <div class="planet-detail"></div>
+        <div class="planet-detail"></div>
+        <div class="planet-detail"></div>
+        <div class="planet-detail"></div>
+        <div class="planet-detail"></div>
+        <div class="planet-detail"></div>
+
+        <div class="aura"></div>
+        <div class="aura-detail"></div>
+      </div>
+      <div class="aura-out"></div>
+    </div>
+
+    <form name="sign_in" ng-submit="modal.signIn(modal.user)">
+      <div class="list">
+        <label class="item item-input item-floating-label item-icon-right">
+          <i class="icon ion-iphone positive"></i>
+          <span class="input-label">手机号</span>
+          <input type="text" placeholder="用户名" ng-model="modal.user.phone">
+        </label>
+        <label class="item item-input item-floating-label item-icon-right">
+          <i class="icon positive" ng-class="{true:'ion-ios-eye',false:'ion-ios-eye-outline'}[modal.pw.icon]" on-hold="modal.togglePW(modal.pw)" on-release="modal.togglePW(modal.pw)"></i>
+          <span class="input-label">密码</span>
+          <input type="{{modal.pw.type}}" placeholder="密码" ng-model="modal.user.pw">
+        </label>
+        <div class="item item-checkbox">
+          <label class="checkbox">
+            <input type="checkbox" ng-model="modal.user.on">
+          </label>
+          7天内快捷登陆
+        </div>
+        <div class="item item-divider">
+          还没有账号?<a ui-sref="login.signUp" ng-click="login(false)">点击注册</a>
+        </div>
+      </div>
+      <div class="padding-left padding-right">
+        <button type="submit" class="button button-block button-flat button-positive">登陆</button>
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>

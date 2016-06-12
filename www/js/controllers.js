@@ -1,6 +1,7 @@
 angular.module('starter.controllers', [])
 //tab
-.controller("TabsCtrl",["$scope","ionicMaterialInk",function ($scope,ionicMaterialInk) {
+.controller("TabsCtrl",["$scope","ionicMaterialInk","response","$state","$ionicSideMenuDelegate",
+  function ($scope,ionicMaterialInk,response,$state,$ionicSideMenuDelegate) {
   $scope.$on('$ionicView.enter', function(e) {
     ionicMaterialInk.displayEffect();
   });
@@ -15,14 +16,48 @@ angular.module('starter.controllers', [])
       userStruts:true
     },
     {
+      name:'paper-airplane',
+      label:"注册",
+      sub:"推荐送积分",
+      rec:"login.signUp",
+      userStruts:true
+    },
+    {
       name:'log-out',
       label:"安全退出",
       sub:"轻松理财",
-      rec:"login.signIn",
+      rec:"login.out",
       userStruts:false
     }
   ];
-
+  $scope.closeMenu = function(){
+    if($ionicSideMenuDelegate.isOpenRight()){
+      $ionicSideMenuDelegate.toggleRight(false);
+      vm.toggleMenu=false;
+    }
+  };
+  vm.logout = function () {
+    response.logout().get(function (res) {
+      if(res){
+        angular.isNumber($scope.user.on)?$scope.setUserOn(0):$scope.setUserOn(false);
+        $scope.saveUserStruts();
+        $scope.closeMenu();
+        $state.go("tab.home",{},{reload:true});
+      }
+    });
+  };
+  vm.logUp = function (index) {
+    switch (index){
+      case 0:
+        $scope.closeMenu();
+        $scope.login(true);
+            break;
+      case 1:
+        $scope.closeMenu();
+        $state.go("login.signUp");
+            break;
+    }
+  };
 }])
 //登陆注册
 .controller("Login",["$scope","ionicMaterialInk",function ($scope,ionicMaterialInk) {
@@ -38,20 +73,6 @@ angular.module('starter.controllers', [])
     $scope.$on("$ionicView.enter",function (e) {
 
     });
-    function check_user(user) {
-      if(user.phone&&user.pw){
-        if(user.phone.length>=6&&user.pw.length>=6){
-          popup.popup.loading(3000);
-          return true;
-        }else{
-          popup.popup.alert({title:"注意",template:"格式有误"});
-          return false;
-        }
-      }else{
-        popup.popup.alert({title:"注意",template:"请填写表单"});
-        return false;
-      }
-    }
     var vm = this;
     vm.user={};
     vm.pw = {
@@ -65,7 +86,7 @@ angular.module('starter.controllers', [])
     };
 
     vm.signIn = function (user) {
-      check_user(user)?(
+      popup.popup.checkUser(user)?(
         response.user(user.phone,user.pw).save(function (response) {
           popup.popup.loadHide();
           if(angular.isNumber(response.check)){
@@ -265,20 +286,21 @@ angular.module('starter.controllers', [])
     enableFriends: true
   };
   vm.showInfo = true;
-    
-    
+
+
   $scope.$on("$ionicView.enter",function (e) {
     ionicMaterialMotion.ripple();
     ionicMaterialInk.displayEffect();
     if($scope.user.on){
-      console.log($scope.user);
+      console.log($scope.user.on);
       // if(!angular.equals($scope.user.on,true)){
         // popup.popup.prompt({title:"快捷登陆",template:"账号:"+$scope.user.phone,inputType:"password",defaultText:"123456",maxLength:16,inputPlaceHolder:"密码"});
       // }
     }else{
-      $state.go("login.signIn");
+      $scope.login(true);
     }
   });
+
 }])
 
 // 账户充值 tab-3.
