@@ -292,34 +292,120 @@ angular.module('starter.controllers', [])
     ionicMaterialMotion.ripple();
     ionicMaterialInk.displayEffect();
     if($scope.user.on){
-      console.log($scope.user.on);
-      // if(!angular.equals($scope.user.on,true)){
-        // popup.popup.prompt({title:"快捷登陆",template:"账号:"+$scope.user.phone,inputType:"password",defaultText:"123456",maxLength:16,inputPlaceHolder:"密码"});
-      // }
+      // console.log($scope.user);
     }else{
-      $scope.login(true);
+        $scope.login(true);
     }
   });
 
 }])
 
 // 账户充值 tab-3.
-.controller("Recode",["$scope",function ($scope) {
+.controller("Recode",["$scope","bank","popup","response","$ionicHistory",function ($scope,bank,popup,response,$ionicHistory) {
   var vm = this;
-  vm.test = "账户充值";
+  vm.title = "账户充值";
   vm.userInfo = {
     lock:true,
     pwType:"password"
   };
-
+  vm.sendCode = false;
   vm.toggleLock = function (userInfo) {
     vm.userInfo.lock = !userInfo.lock;
     vm.userInfo.pwType = vm.userInfo.lock?"password":"text";
+  };
+  function error_back(error,title) {
+    $ionicHistory.goBack();
+    popup.popup.alert({title:title||"请求失败",template:"请在网络良好的环境下再次尝试"});
   }
+  function checkMail(user){
+    response.checkMail(user.bankSelect.id,user.reNumber).save(function(res){
+      if(res !== "PERMIT"){
+        popup.popup.alert({title:"验证失败",template:res});
+      }else if(angular.equals("PERMIT",res)){
+        response.checkPw(user.pw).save(function (res) {
+          if(!res){
+            popup.popup.alert({title:"充值失败",template:"网络状况不良"});
+          }else{
+            if(res.same){
+              vm.sendCode = true;
+              // - 请求发送开始 -
+              response.deposit(user.reNumber,user.bankSelect.id).save(function (res) {
+                if(res.error){
+                  popup.popup.alert({title:"充值失败",template:res.error});
+                }else if(res.success){
+                  popup.popup.alert({title:"提交成功",template:res.success});
+                }else if(res.status){
+                  popup.popup.alert({title:"充值处理中",template:res.status});
+                }else if(res.process){
+                  popup.popup.alert({title:"充值处理中",template:res.process});
+                }
+              },error_back)
+            }
+          }
+        },error_back);
+      }
+    },error_back);
+  }
+
+  function validataCoding(user) {
+    var valid = response.checkCode(user.code).save(function (res) {
+      vm.sendCode = false;
+      if(res.error){
+        popup.popup.alert({title:"充值失败",template:res.error});
+      }else if(res.success){
+        popup.popup.alert({title:"充值成功",template:res.success});
+      }
+    },error_back);
+  }
+
+  vm.submit = function (user) {
+    console.log(user);
+    vm.sendCode?validataCoding(user):checkMail(user);
+  };
+
+  $scope.$on("$ionicView.enter",function (e) {
+    bank.query(function (res) {
+      vm.banklist = res;
+    },function (error) {
+      error_back(null,"获取银行列表失败");
+    });
+  });
+
 }])
 
   // 绑卡 tab-3
 .controller("BindCard",["$scope",function ($scope) {
   var vm = this;
   vm.test= "用户绑卡";
-}]);
+}])
+
+.controller("Autonym",["$scope","response","popup",function ($scope,response,popup) {
+  var vm = this;
+  vm.title = "实名认证";
+  vm.user = {};
+  vm.autonym = function (user) {
+    if(user.hasOwnProperty("idNumber")&&user.hasOwnProperty("name")){
+      var number = user.idNumber,name = user.name;
+      if(number.length>=18&&name.length>=2){
+        response.idCheck(user.name,user.idNumber).save(function (res) {
+          if(res.checkout){
+            popup.popup.alert({title:res.checkout,template:"请稍后再试"});
+            $state.go("tab.home");
+          }else if(res.success){
+            popup.popup.alert({title:"恭喜",template:res.success});
+            $scope.idPass();
+            $state.go("app.account");
+          }
+        },function (error) {
+          $state.go("tab.home");
+        });
+      }else{
+        popup.popup.alert({title:"出错了",template:"表单格式有误"});
+      }
+    }else{
+      popup.popup.alert({title:"出错了",template:"请填写表单"});
+    }
+  };
+
+}])
+;

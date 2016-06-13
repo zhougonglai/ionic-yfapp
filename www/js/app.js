@@ -46,7 +46,10 @@ angular.module('starter', [
   $rootScope.resetUserOn = function(){
     $rootScope.user.on = angular.isNumber($rootScope.user.on)?0:false;
   };
-
+  $rootScope.idPass = function () {
+    $rootScope.user.idcheck = true;
+    $rootScope.saveUserStruts();
+  };
   $ionicModal.fromTemplateUrl("templates/tmpl/model.html",{
     scope:$rootScope,
     animation:"slide-in-up"
@@ -88,21 +91,21 @@ angular.module('starter', [
   var phoneMach = "^((13[0-9])|(14[5|7])|(15[0|1|2|3|5|6|7|8|9])|(17[6|7|8])|18[0-9])\\d{8}|(170[0|5|9]\\d{7})$";
 
   $stateProvider
-  .state('tab', {
+  .state('tab', {     //主容器
     url: '/tab',
     abstract: true,
     templateUrl: 'templates/tabs.html',
     controller: "TabsCtrl",
     controllerAs:"vm"
   })
-  .state("login",{
+  .state("login",{    //账户容器
     url:"/login",
     abstract:true,
     templateUrl:"templates/login/login.html",
     controller:"Login",
     controllerAs:"vm"
   })
-  .state("login.signIn",{
+  .state("login.signIn",{//登陆
     url:"/signIn",
     views:{
       "sign-in":{
@@ -112,7 +115,7 @@ angular.module('starter', [
       }
     }
   })
-  .state("login.signUp",{
+  .state("login.signUp",{//注册
     url:"/signUp?{friend:"+phoneMach+"}&{phone:"+phoneMach+"}",
     views:{
       "sign-up":{
@@ -122,7 +125,7 @@ angular.module('starter', [
       }
     }
   })
-  .state('tab.home', {
+  .state('tab.home', {//主页
     url: '/home',
     views: {
       'tab-home': {
@@ -132,7 +135,7 @@ angular.module('starter', [
       }
     }
   })
-  .state('tab.list', {
+  .state('tab.list', {//投资列表
       url: '/list',
       views: {
         'tab-list': {
@@ -142,7 +145,7 @@ angular.module('starter', [
         }
       }
   })
-  .state("tab.detail",{
+  .state("tab.detail",{//投资详情
     url:"/detail/:id",
     views:{
       "tab-list":{
@@ -152,7 +155,7 @@ angular.module('starter', [
       }
     }
   })
-  .state('tab.account', {
+  .state('tab.account', {//账户中心
     url: '/account',
     views: {
       'tab-account': {
@@ -162,22 +165,42 @@ angular.module('starter', [
       }
     }
   })
-  .state("tab.recode",{
+  .state("tab.recode",{//充值
     url:"/recode",
     views:{
       'tab-account':{
-        templateUrl:"templates/account-recode.html",
+        templateUrl:"templates/account/account-recode.html",
         controller:"Recode",
-        controllerAs:"vm"
+        controllerAs:"vm",
+        resolve:{
+          bank:["response",function (response) {
+            return response.myBank();
+          }]
+        }
       }
     }
   })
-  .state("tab.bindCard",{
+  .state("tab.bindCard",{//绑卡
     url:"/bindCard",
     views:{
       "tab-account":{
-        templateUrl:"templates/account-bindcard.html",
+        templateUrl:"templates/account/account-bindcard.html",
         controller:"BindCard",
+        controllerAs:"vm",
+        resolve:{
+          bank_list:["response",function (response) {
+            return response.bankList();
+          }]
+        }
+      }
+    }
+  })
+  .state("tab.autonym",{
+    url:"/autonym",
+    views:{
+      "tab-account":{
+        templateUrl:"templates/account/account-autonym.html",
+        controller:"Autonym",
         controllerAs:"vm"
       }
     }

@@ -12625,18 +12625,29 @@ a {
 .scroll-content > .scroll {
   height: 100%; }
 
-.bar-stable button.back-button {
-  max-width: 100px;
-  width: 85px; }
+.title-center {
+  text-align: center !important; }
 
-.slider {
-  height: 100%; }
+ion-content {
+  background-image: url("../img/bg.svg");
+  background-size: cover; }
+
+.transition, .card {
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out; }
 
 .no-margin {
   margin: 0 !important; }
 
 .no-padding {
   padding: 0 !important; }
+
+.bar-stable button.back-button {
+  max-width: 100px;
+  width: 85px; }
+
+.slider {
+  height: 100%; }
 
 .slider-slide {
   color: #000;
@@ -12684,14 +12695,6 @@ ion-slide img {
     overflow: hidden;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 8px 0 -3px #f6f6f6, 0 9px 1px -3px rgba(0, 0, 0, 0.2), 0 16px 0 -6px #f6f6f6, 0 17px 2px -6px rgba(0, 0, 0, 0.2); }
 
-ion-content {
-  background-image: url("../img/bg.svg");
-  background-size: cover; }
-
-.transition, .card {
-  -webkit-transition: all .5s ease-in-out;
-  transition: all .5s ease-in-out; }
-
 #profile-info {
   position: absolute;
   width: 96%;
@@ -12718,8 +12721,8 @@ ion-content {
         width: 110px;
         height: 110px; }
 
-.title-center {
-  text-align: center !important; }
+.item-body .bank_logo {
+  margin: 0 auto; }
 
 .animated {
   -webkit-animation-duration: 0.5s;

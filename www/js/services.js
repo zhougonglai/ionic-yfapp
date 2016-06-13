@@ -13,11 +13,41 @@ angular.module('starter.services', [])
     var userCheck = function (phone) {
       return $resource("/wechat/checkUser",{phone:phone});
     };
+    var idCheck = function (name,number) {
+      return $resource("/wechat/idcheck",{name:name,id:number});
+    };
+    var myBank = function () {
+      return $resource("/wechat/getMyBank");
+    };
+    var bankList = function () {
+      return $resource("/wechat/getbank");
+    };
+    // /front/transaction/recharge
+    var recodeUrl = "/wechat/recharge";
+    var checkMail = function (cardId,money) {
+      return $resource(recodeUrl+"/validateMoney",{bankCardId:cardId,recharMoney:money});
+    };
+    var checkPw = function (password) {
+      return $resource(recodeUrl+"/checkpaypassword",{payPw:password});
+    };
+    var deposit = function (money,cardId) {
+      return $resource(recodeUrl+"/rechargeHostingDeposit",{recharMoneyParam:money,bankCardId:cardId,payMethod:"bindingPay"});
+    };
+    var checkCode = function (code) {
+      return $resource(recodeUrl+"/rechargeHostingPay",{valiCode:code});
+    };
     return {
       phone:phone,
       user:user,
       logout:logout,
-      check:userCheck
+      check:userCheck,
+      idCheck:idCheck,
+      myBank:myBank,
+      bankList:bankList,
+      checkMail:checkMail,
+      checkPw:checkPw,
+      deposit:deposit,
+      checkCode:checkCode
     }
   }])
   .factory("local",["$cookies",function ($cookies) {

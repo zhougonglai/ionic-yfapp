@@ -1,0 +1,77 @@
+<ion-view view-title="{{vm.title}}" animation="slide-left-right">
+  <ion-content has-header="true">
+    <form class="list card" ng-submit="vm.submit(vm.user)">
+      <div ng-show="!vm.sendCode">
+
+        <label class="item item-input item-select">
+          <div class="input-label">
+            选择要绑定的银行
+          </div>
+          <select ng-options="bank.name for bank in vm.banklist" ng-model="vm.user.bankSelect">
+            <option value="">-- 请选择银行 --</option>
+          </select>
+        </label>
+
+        <label class="item item-input item-floating-label item-icon-right">
+          <i class="icon ion-cash positive"></i>
+          <span class="input-label">充值金额为100的整数倍</span>
+          <input type="number" placeholder="充值金额" ng-model="vm.user.reNumber">
+        </label>
+
+        <label class="item item-input item-floating-label item-icon-right">
+          <i class="icon positive" ng-class="{true:'ion-locked',false:'ion-unlocked'}[vm.userInfo.lock]" on-hold="vm.toggleLock(vm.userInfo)" on-release="vm.toggleLock(vm.userInfo)"></i>
+          <span class="input-label">初始值为账户密码</span>
+          <input type="{{vm.userInfo.pwType}}" placeholder="支付密码" ng-model="vm.user.pw">
+        </label>
+
+        <div class="item item-body" ng-show="vm.user.bankSelect">
+          <div class="row row-wrap text-center">
+            <div class="col-33">
+              <div>银行客服电话</div>
+              <div>{{vm.user.bankSelect.phone}}</div>
+            </div>
+            <div class="col-33">
+              <div>银行logo</div>
+              <img class="bank_logo" ng-src="{{vm.user.bankSelect.imageUrl}}"/>
+            </div>
+            <div class="col-33">
+              <div>银行简码</div>
+              <div>{{vm.user.bankSelect.bankcode}}</div>
+            </div>
+            <div class="col-33">
+              <div>单次最大限额</div>
+              <div>{{vm.user.bankSelect.singleBindPayQuota}}</div>
+            </div>
+            <div class="col-33">
+              <div>首次绑定限额</div>
+              <div>{{vm.user.bankSelect.firstBindPayQuota}}</div>
+            </div>
+            <div class="col-33">
+              <div>单日最大限额</div>
+              <div>{{vm.user.bankSelect.dayBindPayQuota}}</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div ng-show="vm.sendCode">
+        <label class="item item-input item-floating-label item-icon-right">
+          <i class="icon ion-iphone positive"></i>
+          <span class="input-label">100的整数倍</span>
+          <input type="number" placeholder="短信验证码" ng-model="vm.user.code">
+        </label>
+      </div>
+
+      <div class="padding-left padding-right">
+        <button type="submit" class="button button-block button-flat button-positive">
+          <span ng-show="!vm.sendCode">
+            短信验证
+          </span>
+          <span ng-show="vm.sendCode">
+            确认充值
+          </span>
+        </button>
+      </div>
+    </form>
+  </ion-content>
+</ion-view>

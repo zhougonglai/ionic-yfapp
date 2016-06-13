@@ -1,0 +1,19 @@
+<ion-view view-title="{{vm.title}}" animation="slide-left-right">
+  <ion-content has-header="true">
+    <form class="list" ng-submit="vm.autonym(vm.user)">
+      <label class="item item-input item-floating-label item-icon-right">
+        <i class="icon ion-compose"></i>
+        <span class="input-label">真实姓名</span>
+        <input type="text" placeholder="身份证对应姓名" ng-model="vm.user.name">
+      </label>
+      <label class="item item-input item-floating-label item-icon-right">
+        <i class="icon ion-card"></i>
+        <span class="input-label">18位第二代身份证号</span>
+        <input type="text" placeholder="身份证号码" ng-model="vm.user.idNumber">
+      </label>
+      <div class="padding-left padding-right">
+        <button type="submit" class="button button-block button-flat button-positive">认证</button>
+      </div>
+    </form>
+  </ion-content>
+</ion-view>

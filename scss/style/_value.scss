@@ -12,3 +12,25 @@ $color:#fff;
 .scroll-content>.scroll {
   height: 100%;
 }
+//126 × 36
+.title-center{
+  text-align: center !important;
+}
+
+ion-content{
+  background-image: url("../img/bg.svg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+}
+
+.transition{
+  transition: all .5s ease-in-out;
+}
+
+.no-margin{
+  margin:0 !important;
+}
+.no-padding{
+  padding: 0 !important;
+}

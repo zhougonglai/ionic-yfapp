@@ -9,12 +9,6 @@
 .slider {
   height: 100%;
 }
-.no-margin{
-  margin:0 !important;
-}
-.no-padding{
-  padding: 0 !important;
-}
 .slider-slide {
   color: #000;
   background-color: #fff;
@@ -80,17 +74,6 @@ ion-slide {
   }
 }
 
-ion-content{
-  background-image: url("../img/bg.svg");
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-}
-
-.transition{
-  transition: all .5s ease-in-out;
-}
-
 #profile-info{
   position: absolute;
   width: 96%;
@@ -124,6 +107,9 @@ ion-content{
   .list{
   }
 }
-.title-center{
-  text-align: center !important;
+
+.item-body{
+  .bank_logo{
+    margin:0 auto;
+  }
 }
