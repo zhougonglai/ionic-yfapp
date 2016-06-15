@@ -1,25 +1,25 @@
 <ion-view view-title="投资" animation="slide-left-right">
   <ion-content has-header="true">
     <ion-list type="card" show-delete="false" show-reorder="false" can-swipe="false" class="animate-ripple">
-      <div ng-repeat="item in vm.data" ui-sref="tab.detail({id:item.id})">
+      <div ng-repeat="item in vm.facts" ui-sref="tab.detail({id:item.id})" ng-show="vm.haveFact">
         <ion-item class="item-avatar-left">
           <img src="./img/borrowmark/mark1.png" alt="项目评级">
           <div >
             <h2>{{item.title}}</h2>
-            <p>{{item.number}}</p>
+            <p>借款类型:{{item.type}}</p>
           </div>
         </ion-item>
         <ion-item class="item-body" style="padding-top: 0;">
           <div class="row row-wrap row-no-padding">
             <div class="col col-25 col-center">
-              {{item.ripe}}%
+              {{(item.borrowMoney-item.remainderMoney)/item.borrowMoney*100|number:0}}%
             </div>
             <div class="col col-75">
               <div class="row row-wrap row-no-padding">
-                <div class="col col-90">剩余:{{item.low}}</div>
+                <div class="col col-90">剩余:{{item.remainderMoney}}</div>
                 <div class="col col-90">
                   <div class="card-process">
-                    <div class="progress" borrow="1000000" remainder="30000"></div>
+                    <div class="progress" borrow="item.borrowMoney" remainder="item.remainderMoney"></div>
                   </div>
                 </div>
               </div>
@@ -29,43 +29,47 @@
         <ion-item class="item">
           <div class="row-no-padding row" style="padding-top: 0;">
             <div class="col col-33 text-center">
-              <h6>title</h6>
-              <p>25</p>
+              <h6>借款金额</h6>
+              <p>{{::item.borrowMoney}}</p>
             </div>
             <div class="col col-33 text-center">
-              <h6>title</h6>
-              <p>25</p>
+              <h6>借款利率</h6>
+              <p>{{::item.profitRate}}</p>
             </div>
             <div class="col col-33 text-center">
-              <h6>title</h6>
-              <p>25</p>
+              <h6>借款期限</h6>
+              <p>{{::item.borrowDeadline}}</p>
             </div>
           </div>
         </ion-item>
       </div>
-    </ion-list>
+      <div ng-show="!vm.haveFact" style="min-height: 200px;">
+        <div style="height:500px;background-image: url('./img/empty.png');background-size: cover;">
 
-    <div class="space" style="bottom: -30%;top:inherit;">
-      <div class="ship">
-        <div class="ship-rotate">
-          <div class="pod"></div>
-          <div class="fuselage"></div>
+        </div>
+        <div class="space" style="bottom:-25%;top:inherit;">
+          <div class="ship">
+            <div class="ship-rotate">
+              <div class="pod"></div>
+              <div class="fuselage"></div>
+            </div>
+          </div>
+          <div class="ship-shadow"></div>
+          <div class="mars">
+            <div class="tentacle"></div>
+            <div class="flag">
+              <div class="small-tentacle"></div>
+            </div>
+            <div class="planet">
+              <div class="surface"></div>
+              <div class="crater1"></div>
+              <div class="crater2"></div>
+              <div class="crater3"></div>
+            </div>
+          </div>
+          <div class="test"></div>
         </div>
       </div>
-      <div class="ship-shadow"></div>
-      <div class="mars">
-        <div class="tentacle"></div>
-        <div class="flag">
-          <div class="small-tentacle"></div>
-        </div>
-        <div class="planet">
-          <div class="surface"></div>
-          <div class="crater1"></div>
-          <div class="crater2"></div>
-          <div class="crater3"></div>
-        </div>
-      </div>
-      <div class="test"></div>
-    </div>
+    </ion-list>
   </ion-content>
 </ion-view>

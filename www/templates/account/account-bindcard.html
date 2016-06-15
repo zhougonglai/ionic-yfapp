@@ -1,45 +1,56 @@
-<ion-view view-title="用户绑卡" animation="slide-left-right">
+<ion-view view-title="{{vm.title}}" animation="slide-left-right">
   <ion-content has-header="true">
-    <div class="list card">
-      <label class="item item-input item-select">
-        <div class="input-label">选择要绑定的银行</div>
-        <select>
-          <option>Blue</option>
-          <option selected>Green</option>
-          <option>Red</option>
-        </select>
-      </label>
-      <label class="item item-input item-select">
-        <div class="input-label">开户城市</div>
-        <select>
-          <option>Blue</option>
-          <option selected>Green</option>
-          <option>Red</option>
-        </select>
-      </label>
-      <label class="item item-input item-select">
-        <div class="input-label">市区</div>
-        <select>
-          <option>Blue</option>
-          <option selected>Green</option>
-          <option>Red</option>
-        </select>
-      </label>
+    <form class="list card" ng-submit="vm.bindCard(vm.user)">
+      <div ng-show="!vm.sendCode">
+        <label class="item item-input item-select">
+          <div class="input-label">选择要绑定的银行</div>
+          <select ng-options="bank.name for bank in vm.bankList" ng-model="vm.user.selectBank">
+            <option value="">-- 请选择 --</option>
+          </select>
+        </label>
+        <label class="item item-input item-select">
+          <div class="input-label">开户城市</div>
+          <select ng-options="city.name for city in vm.cityList" ng-model="vm.user.selectCity" ng-change="vm.onCityChange(vm.user)">
+            <option value="">-- 请选择 --</option>
+          </select>
+        </label>
+        <label class="item item-input item-select">
+          <div class="input-label">市区</div>
+          <select ng-options="town.name for town in vm.towns" ng-model="vm.user.selectTown">
+            <option>-- 请选择 --</option>
+          </select>
+        </label>
 
-      <label class="item item-input item-floating-label item-icon-right">
-        <i class="icon ion-iphone positive"></i>
-        <span class="input-label">手机号</span>
-        <input type="text" placeholder="银行卡预留手机号">
-      </label>
+        <label class="item item-input item-floating-label item-icon-right">
+          <i class="icon ion-card positive"></i>
+          <span class="input-label">相关银行卡卡号</span>
+          <input type="text" placeholder="银行卡卡号" ng-model="vm.user.cardNumber">
+        </label>
 
-      <label class="item item-input item-floating-label item-icon-right">
-        <i class="icon ion-iphone positive"></i>
-        <span class="input-label">手机号</span>
-        <input type="text" placeholder="账号">
-      </label>
-    </div>
-    <div class="padding-left padding-right">
-      <button type="submit" class="button button-block button-flat button-positive">{{vm.confirm}}</button>
-    </div>
+        <label class="item item-input item-floating-label item-icon-right">
+          <i class="icon ion-iphone positive"></i>
+          <span class="input-label">手机号</span>
+          <input type="text" placeholder="预留手机号" ng-model="vm.user.phoneNumber">
+        </label>
+      </div>
+      <div ng-show="vm.sendCode">
+        <label class="item item-input item-floating-label item-icon-right">
+          <i class="icon ion-iphone positive"></i>
+          <span class="input-label">6位数短信验证码</span>
+          <input type="text" placeholder="短信验证码" ng-model="vm.user.code">
+        </label>
+      </div>
+
+      <div class="padding-left padding-right">
+        <button type="submit" class="button button-block button-flat button-positive">
+          <span ng-show="!vm.sendCode">
+            短信验证
+          </span>
+          <span ng-show="vm.sendCode">
+            确认绑卡
+          </span>
+        </button>
+      </div>
+    </form>
   </ion-content>
 </ion-view>

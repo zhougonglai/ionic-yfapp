@@ -2,7 +2,9 @@ $color:#fff;
 .text-white{
   color:$color;
 }
-
+.text-center {
+  text-align: center !important;
+}
 .positive{
   color:#387ef5 !important;
 }
@@ -16,7 +18,9 @@ $color:#fff;
 .title-center{
   text-align: center !important;
 }
-
+ion-list.detail ion-item.item-icon-left{
+  padding-left:75px;
+}
 ion-content{
   background-image: url("../img/bg.svg");
   -webkit-background-size: cover;

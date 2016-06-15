@@ -26,7 +26,6 @@ $dark:                            #444 !default;
   used under CC BY http://creativecommons.org/licenses/by/4.0/
   Modified icons to fit ionicon’s grid from original.
 */
-@import url(https://fonts.googleapis.com/css?family=Nunito:400,700,300);
 @font-face {
   font-family: "Ionicons";
   src: url("../lib/ionic/fonts/ionicons.eot?v=2.0.1");
@@ -12616,6 +12615,9 @@ a {
 .text-white {
   color: #fff; }
 
+.text-center {
+  text-align: center !important; }
+
 .positive {
   color: #387ef5 !important; }
 
@@ -12627,6 +12629,9 @@ a {
 
 .title-center {
   text-align: center !important; }
+
+ion-list.detail ion-item.item-icon-left {
+  padding-left: 75px; }
 
 ion-content {
   background-image: url("../img/bg.svg");

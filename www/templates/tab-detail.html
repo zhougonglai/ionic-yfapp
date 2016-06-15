@@ -1,18 +1,56 @@
-<ion-view view-title="项目详情">
-  <ion-content has-header="true">
-    <p>
-      案说法是嘎嘎
-      {{vm.name}}
-    </p>
-    afafasf
-    asf
-    a
-    sf
-    as
-    f
-    asf
-    as
-    f
-    asf
+<ion-view view-title="{{vm.title}}">
+  <ion-content>
+    <div class="button-bar">
+      <a class="button" ng-class="{1:'active'}[vm.info]" ng-click="vm.swichTab(1)">借款详情</a>
+      <a class="button" ng-class="{2:'active'}[vm.info]" ng-click="vm.swichTab(2)">投资细节</a>
+    </div>
+    <ion-list type="card" ng-show = "vm.info === 1"
+              show-delete="false" show-reorder="false" can-swipe="false" class="animate-ripple detail">
+        <ion-item class="item-icon-left">
+          <i class="icon ion-clock"></i>
+          {{vm.detail.borrowDeadline}}个月
+          <span class="item-note">项目周期</span>
+        </ion-item>
+        <ion-item class="item-icon-left" ng-style="{1:'padding-left: 75px;'}[vm.info]">
+          <i class="icon ion-cash"></i>
+          {{vm.detail.borrowMoney|number:0}}
+          <span class="item-note">贷款金额</span>
+        </ion-item>
+        <ion-item class="item-icon-left">
+          <i class="icon ion-ios-plus"></i>
+          {{vm.detail.profitRate}}%
+          <span class="item-note">贷款利率</span>
+        </ion-item>
+        <ion-item class="item-icon-left">
+          <i class="icon ion-android-create"></i>
+          {{vm.detail.repaymentType.title}}
+          <span class="item-note">还款类型</span>
+        </ion-item>
+        <ion-item class="item-icon-left">
+          <i class="icon ion-at"></i>
+          {{vm.detail.type}}
+          <span class="item-note">借款方所属</span>
+        </ion-item>
+        <ion-item class="item-divider">
+          项目存档
+        </ion-item>
+        <ion-item class="item-icon-left">
+          <i class="icon ion-clipboard"></i>
+          {{vm.detail.contract}}
+          <span class="item-note">项目编号</span>
+        </ion-item>
+        <ion-item class="item-divider">
+          借款描述
+        </ion-item>
+        <ion-item style="text-indent: 25px;">
+          {{vm.detail.description}}
+        </ion-item>
+    </ion-list>
+    <ion-list  type="card" ng-show = "vm.info === 2"
+               show-delete="false" show-reorder="false" can-swipe="false" class="animate-ripple">
+      <ion-item>
+        啊沙发沙发沙发沙发
+      </ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>

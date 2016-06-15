@@ -7,7 +7,7 @@
           <div class="input-label">
             选择要绑定的银行
           </div>
-          <select ng-options="bank.name for bank in vm.banklist" ng-model="vm.user.bankSelect">
+          <select ng-options="banks.bank.name for banks in vm.banklist" ng-model="vm.user.bankSelect">
             <option value="">-- 请选择银行 --</option>
           </select>
         </label>
@@ -28,27 +28,27 @@
           <div class="row row-wrap text-center">
             <div class="col-33">
               <div>银行客服电话</div>
-              <div>{{vm.user.bankSelect.phone}}</div>
+              <div>{{vm.user.bankSelect.bank.phone}}</div>
             </div>
             <div class="col-33">
               <div>银行logo</div>
-              <img class="bank_logo" ng-src="{{vm.user.bankSelect.imageUrl}}"/>
+              <img class="bank_logo" ng-src="{{vm.user.bankSelect.bank.image}}"/>
             </div>
             <div class="col-33">
               <div>银行简码</div>
-              <div>{{vm.user.bankSelect.bankcode}}</div>
+              <div>{{vm.user.bankSelect.bank.bankcode}}</div>
             </div>
             <div class="col-33">
               <div>单次最大限额</div>
-              <div>{{vm.user.bankSelect.singleBindPayQuota}}</div>
+              <div>{{vm.user.bankSelect.bank.singleBindPayQuota}}</div>
             </div>
             <div class="col-33">
               <div>首次绑定限额</div>
-              <div>{{vm.user.bankSelect.firstBindPayQuota}}</div>
+              <div>{{vm.user.bankSelect.bank.firstBindPayQuota}}</div>
             </div>
             <div class="col-33">
               <div>单日最大限额</div>
-              <div>{{vm.user.bankSelect.dayBindPayQuota}}</div>
+              <div>{{vm.user.bankSelect.bank.dayBindPayQuota}}</div>
             </div>
           </div>
         </div>

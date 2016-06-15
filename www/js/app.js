@@ -8,12 +8,13 @@ angular.module('starter', [
   "ngCookies",
   "ngFx",
   'ionic-material',
+  'ionic-pullup',
   'ngCordova',
   "ngResource",
   'ionMDRipple'
 ])
-.run(["$ionicPlatform","$rootScope","local","$ionicModal","loginService",
-  function($ionicPlatform,$rootScope,local,$ionicModal,loginService) {
+.run(["$ionicPlatform","$rootScope","local","$ionicModal","loginService","response",
+  function($ionicPlatform,$rootScope,local,$ionicModal,loginService,response) {
   $ionicPlatform.ready(function() {
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -45,6 +46,7 @@ angular.module('starter', [
   };
   $rootScope.resetUserOn = function(){
     $rootScope.user.on = angular.isNumber($rootScope.user.on)?0:false;
+    $rootScope.user.userId = null;
   };
   $rootScope.idPass = function () {
     $rootScope.user.idcheck = true;
@@ -61,14 +63,7 @@ angular.module('starter', [
     open?($rootScope.modal.show()):($rootScope.modal.hide());
   };
   $rootScope.checkUser = function (fun) {
-    response.check($rootScope.user.phone).get(function (res) {
-      if(!res.check){
-        $rootScope.resetUserOn();
-        $rootScope.login(true);
-      }else if(res.check){
-        fun();
-      }
-    });
+    angular.isNumber($rootScope.user.userId)?fun():$rootScope.login(true);
   };
 }])
 
@@ -136,12 +131,17 @@ angular.module('starter', [
     }
   })
   .state('tab.list', {//投资列表
-      url: '/list',
+      url: '/list/:page',
       views: {
         'tab-list': {
           templateUrl: 'templates/tab-list.html',
           controller: 'List',
-          controllerAs:"vm"
+          controllerAs:"vm",
+          resolve:{
+            factsList:["response",function (response) {
+              return response.facts();
+            }]
+          }
         }
       }
   })
@@ -151,7 +151,12 @@ angular.module('starter', [
       "tab-list":{
         templateUrl:"templates/tab-detail.html",
         controller:"Detail",
-        controllerAs:"vm"
+        controllerAs:"vm",
+        resolve:{
+          detail:["response",function (response) {
+            return response.getDetail();
+          }]
+        }
       }
     }
   })
@@ -171,12 +176,7 @@ angular.module('starter', [
       'tab-account':{
         templateUrl:"templates/account/account-recode.html",
         controller:"Recode",
-        controllerAs:"vm",
-        resolve:{
-          bank:["response",function (response) {
-            return response.myBank();
-          }]
-        }
+        controllerAs:"vm"
       }
     }
   })
@@ -188,8 +188,11 @@ angular.module('starter', [
         controller:"BindCard",
         controllerAs:"vm",
         resolve:{
-          bank_list:["response",function (response) {
+          bankList:["response",function (response) {
             return response.bankList();
+          }],
+          cityList:["response",function (response) {
+            return response.cityList();
           }]
         }
       }

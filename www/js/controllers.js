@@ -30,16 +30,18 @@ angular.module('starter.controllers', [])
       userStruts:false
     }
   ];
+    // 关闭菜单
   $scope.closeMenu = function(){
     if($ionicSideMenuDelegate.isOpenRight()){
       $ionicSideMenuDelegate.toggleRight(false);
       vm.toggleMenu=false;
     }
   };
+    //退出登录
   vm.logout = function () {
     response.logout().get(function (res) {
       if(res){
-        angular.isNumber($scope.user.on)?$scope.setUserOn(0):$scope.setUserOn(false);
+        $scope.resetUserOn();
         $scope.saveUserStruts();
         $scope.closeMenu();
         $state.go("tab.home",{},{reload:true});
@@ -246,36 +248,45 @@ angular.module('starter.controllers', [])
   }])
 
 // 投资列表 tab-2
-.controller("List",["$scope","ionicMaterialMotion",function ($scope,ionicMaterialMotion) {
-    $scope.$on("$ionicView.enter",function (e) {
-      ionicMaterialMotion.ripple();
-    });
+.controller("List",["$scope","ionicMaterialMotion","factsList","$stateParams","viewService","$timeout",
+  function ($scope,ionicMaterialMotion,factsList,$stateParams,viewService,$timeout) {
     var vm = this;
-    vm.data = [
-      {
-        id:25,
-        title:"创新工业",
-        name : "Slide 1",
-        number  : 10000,
-        ripe:2533,
-        low:82599
-      },{
-        id:42,
-        title:"亿富科技",
-        name : "Slide 2",
-        number  : 100000,
-        ripe:2533,
-        low:82599
-      }
-    ];
+    vm.haveFact = false;
+    $scope.$on("$ionicView.loaded",function (e) {
+      factsList.query({page:$stateParams.page},function (res) {
+        if(res.length>0){
+          console.log(res);
+          vm.facts = res;
+          vm.haveFact = true;
+          $timeout(function () {
+            ionicMaterialMotion.ripple();
+          },1000);
+        }
+      },function (error) {
+        viewService.goBack();
+      });
+    });
   }])
 
 // 投资详情 tab-2-detail
-.controller("Detail",["$scope","$stateParams",function ($scope,$stateParams) {
+.controller("Detail",["$scope","$stateParams","detail","viewService","ionicMaterialMotion","$timeout",
+  function ($scope,$stateParams,detail,viewService,ionicMaterialMotion,$timeout) {
   var vm = this;
-  vm.test = "详情页 成功";
-  $scope.$on("$ionicView.enter",function (e) {
-    console.log("详情页..enter",$stateParams);
+  vm.title = "项目详情";
+  vm.info = 1;
+  vm.swichTab = function (index) {
+    if(!angular.equals(vm.info,index)) vm.info = index;
+  };
+  $scope.$on("$ionicView.loaded",function (e) {
+    detail.get({detailId:$stateParams.id},function(res){
+      console.log(res);
+      vm.detail = res;
+      $timeout(function () {
+        ionicMaterialMotion.ripple();
+      },1000);
+    },function (error) {
+      viewService.goBack();
+    });
   });
 }])
 // 用户详情 tab-3.
@@ -292,7 +303,7 @@ angular.module('starter.controllers', [])
     ionicMaterialMotion.ripple();
     ionicMaterialInk.displayEffect();
     if($scope.user.on){
-      // console.log($scope.user);
+      console.log($scope.user);
     }else{
         $scope.login(true);
     }
@@ -301,7 +312,7 @@ angular.module('starter.controllers', [])
 }])
 
 // 账户充值 tab-3.
-.controller("Recode",["$scope","bank","popup","response","$ionicHistory",function ($scope,bank,popup,response,$ionicHistory) {
+.controller("Recode",["$scope","popup","response","$ionicHistory",function ($scope,popup,response,$ionicHistory) {
   var vm = this;
   vm.title = "账户充值";
   vm.userInfo = {
@@ -357,54 +368,139 @@ angular.module('starter.controllers', [])
       }
     },error_back);
   }
-
+  //绑卡提交  sendCode?true(验证短信):false(验证短信);
   vm.submit = function (user) {
-    console.log(user);
     vm.sendCode?validataCoding(user):checkMail(user);
   };
-
-  $scope.$on("$ionicView.enter",function (e) {
-    bank.query(function (res) {
+  //获取银行卡
+  function getMyBank(){
+    response.myBank($scope.user.userId).query(function (res) {
       vm.banklist = res;
     },function (error) {
       error_back(null,"获取银行列表失败");
     });
+  }
+  $scope.$on("$ionicView.enter",function (e) {
+    $scope.checkUser(getMyBank);
   });
 
 }])
 
   // 绑卡 tab-3
-.controller("BindCard",["$scope",function ($scope) {
+.controller("BindCard",["$scope","bankList","cityList","response","popup","viewService",
+  function ($scope,bankList,cityList,response,popup,viewService) {
   var vm = this;
-  vm.test= "用户绑卡";
-}])
+  vm.title= "用户绑卡";
+  vm.user = {};
+  vm.sendCode = false;
+  vm.onCityChange = function (user) {
+    if(user.selectCity){
+      response.selectCity(user.selectCity.id).query(function (res) {
+        vm.towns = res;
+      });
+    }
+  };
+  function bindCard(user) {
+    if(!user.hasOwnProperty("selectCity")){
+      popup.popup.alert({title:"表单未完成",template:"请选择城镇"});
+    }else if(!user.hasOwnProperty("selectTown")){
+      popup.popup.alert({title:"表单未完成",template:"请选择市区"});
+    }else if(!user.hasOwnProperty("selectBank")){
+      popup.popup.alert({title:"表单未完成",template:"请选择银行"});
+    }else if(!user.hasOwnProperty("cardNumber")) {
+      popup.popup.alert({title:"表单未完成",template:"请检查银行卡"});
+    }else if(!user.hasOwnProperty("phoneNumber")){
+      popup.popup.alert({title:"表单未完成",template:"请检查手机号"});
+    }else if(user.selectCity.id&&user.selectTown.id&&user.cardNumber&&user.selectBank.id&&user.phoneNumber){
+      popup.popup.loading(1000*10);
+      response.cardCheck(user.selectCity.id,user.selectTown.id,user.selectBank.id,user.cardNumber,user.phoneNumber,$scope.user.userId).save(function (res) {
+        popup.popup.loadHide();
+        if(res.userError){
+          function login(e) {
+            $scope.login(true);
+          }
+          popup.popup.alert({title:"账户失效",template:res.userError},login);
+        }else if(res.bindError){
+          popup.popup.alert({title:res.bindError,template:"请稍后再试"});
+        }else if(res.unsafeCard){
+          popup.popup.alert({title:"提交成功",template:res.unsafeCard});
+          vm.sendCode = true;
+        }else if(res.safeCard){
+          popup.popup.alert({title:"提交成功",template:res.safeCard});
+          vm.sendCode = true;
+        }
+      });
+    }
+  }
+  function checkMail(user) {
+    if(user.code&&user.cardNumber){
+      response.confirm(user.code,user.cardNumber,$scope.user.userId).save(function (res) {
+        if(res.error){
+          popup.popup.alert({title:res.error,template:"绑卡出现异常"});
+          viewService.goBack();
+        }else if(res.success){
+          popup.popup.alert({title:"恭喜",template:res.success});
+          viewService.goBack();
+        }
+      });
+    }else{
+      popup.popup.alert({title:"请填写验证码",template:"验证码已发送"});
+    }
+  }
 
-.controller("Autonym",["$scope","response","popup",function ($scope,response,popup) {
+  vm.bindCard = function (user) {
+    angular.isNumber($scope.user.userId)?(vm.sendCode?checkMail(user):bindCard(user)):$scope.login(true);
+  };
+
+  function getList() {
+    bankList.query(function (res) {
+      vm.bankList = res;
+    });
+    cityList.query(function (res) {
+      vm.cityList = res;
+    });
+  }
+  // 页面进入事件
+  $scope.$on("$ionicView.enter",function (e) {
+    $scope.checkUser(getList);
+  });
+
+
+}])
+  //实名认证
+.controller("Autonym",["$scope","response","popup","$ionicHistory",function ($scope,response,popup,$ionicHistory) {
   var vm = this;
   vm.title = "实名认证";
   vm.user = {};
-  vm.autonym = function (user) {
-    if(user.hasOwnProperty("idNumber")&&user.hasOwnProperty("name")){
-      var number = user.idNumber,name = user.name;
-      if(number.length>=18&&name.length>=2){
-        response.idCheck(user.name,user.idNumber).save(function (res) {
-          if(res.checkout){
-            popup.popup.alert({title:res.checkout,template:"请稍后再试"});
-            $state.go("tab.home");
-          }else if(res.success){
-            popup.popup.alert({title:"恭喜",template:res.success});
-            $scope.idPass();
-            $state.go("app.account");
-          }
-        },function (error) {
-          $state.go("tab.home");
-        });
+  function idCheck(user) {
+    return function(){
+      if(user.hasOwnProperty("idNumber")&&user.hasOwnProperty("name")){
+        var number = user.idNumber,name = user.name;
+        if(number.length>=18&&name.length>=2){
+          popup.popup.loading(6000);
+          response.idCheck(user.name,user.idNumber).save(function (res) {
+            popup.popup.loadHide();
+            if(res.checkout){
+              popup.popup.alert({title:res.checkout,template:"请稍后再试"});
+              $ionicHistory.goBack();
+            }else if(res.success){
+              popup.popup.alert({title:"恭喜",template:res.success});
+              $scope.idPass();
+              $ionicHistory.goBack();
+            }
+          },function (error) {
+            $ionicHistory.goBack();
+          });
+        }else{
+          popup.popup.alert({title:"出错了",template:"表单格式有误"});
+        }
       }else{
-        popup.popup.alert({title:"出错了",template:"表单格式有误"});
+        popup.popup.alert({title:"出错了",template:"请填写表单"});
       }
-    }else{
-      popup.popup.alert({title:"出错了",template:"请填写表单"});
     }
+  }
+  vm.autonym = function (user) {
+    $scope.checkUser(idCheck(user));
   };
 
 }])

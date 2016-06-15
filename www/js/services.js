@@ -1,5 +1,6 @@
 angular.module('starter.services', [])
   .constant("baseUrl","http://localhost:8080/")
+  //请求列表
   .factory("response",["$resource","baseUrl",function ($resource,baseUrl) {
     var phone = function (phone,key) {
       return $resource("/mobile/get",{phone:phone,key:key});
@@ -16,8 +17,8 @@ angular.module('starter.services', [])
     var idCheck = function (name,number) {
       return $resource("/wechat/idcheck",{name:name,id:number});
     };
-    var myBank = function () {
-      return $resource("/wechat/getMyBank");
+    var myBank = function (userId) {
+      return $resource("/wechat/getMyBank",{userId:userId});
     };
     var bankList = function () {
       return $resource("/wechat/getbank");
@@ -36,20 +37,49 @@ angular.module('starter.services', [])
     var checkCode = function (code) {
       return $resource(recodeUrl+"/rechargeHostingPay",{valiCode:code});
     };
+
+    var cityList = function () {
+      return $resource("/wechat/getCity");
+    };
+    var selectCity = function (id) {
+      return $resource("/wechat/getCityMap",{cityId:id});
+    };
+    // 绑卡 提交
+    var cardCheck = function (cityId,townId,bankId,cardId,phone,userId) {
+      return $resource("/wechat/security/bankinformation",{provinces:cityId,cities:townId,bankCard_no:bankId,cardId:cardId,phone_no:phone,userId:userId});
+    };
+    // 绑卡 确认
+    var confirm = function (code,cardId,userId) {
+      return $resource("/wechat/securityinfo/continue",{code:code,cardId:cardId,userId:userId});
+    };
+    // 项目列表
+    var facts = function () {
+      return $resource("/wechat/list/:page",{page:"@page"},{cache:false});
+    };
+    var getDetail = function () {
+      return $resource("/wechat/detail/:detailId",{detail:"@detail"},{cache:false});
+    };
     return {
       phone:phone,
       user:user,
-      logout:logout,
       check:userCheck,
-      idCheck:idCheck,
-      myBank:myBank,
-      bankList:bankList,
       checkMail:checkMail,
       checkPw:checkPw,
+      checkCode:checkCode,
+      cityList:cityList,
+      cardCheck:cardCheck,
+      confirm:confirm,
+      facts:facts,
+      logout:logout,
+      idCheck:idCheck,
+      myBank:myBank,
+      getDetail:getDetail,
+      bankList:bankList,
       deposit:deposit,
-      checkCode:checkCode
+      selectCity:selectCity
     }
   }])
+  //本地服务
   .factory("local",["$cookies",function ($cookies) {
     var local = {};
     local.get = function(key){
@@ -76,6 +106,7 @@ angular.module('starter.services', [])
     };
     return local;
   }])
+  //登录服务
   .factory("loginService",["response","popup","local","$state",
     function (response,popup,local,$state) {
     var login = {
@@ -136,6 +167,7 @@ angular.module('starter.services', [])
 
     return login;
   }])
+  // 弹出服务
   .service("popup",["$ionicPopup", "$timeout","$ionicLoading",
     function ($ionicPopup, $timeout,$ionicLoading) {
     var base = {
@@ -198,7 +230,7 @@ angular.module('starter.services', [])
     function checkUser(user) {
       if(user.phone&&user.pw){
         if(user.phone.length>=6&&user.pw.length>=6){
-          loading(6000);
+          loading(1000*10);
           return true;
         }else{
           alert({title:"注意",template:"格式有误"});
@@ -220,6 +252,36 @@ angular.module('starter.services', [])
       loadHide:loadHide,
       checkUser:checkUser
     }
+  }])
+  //视图服务
+  .factory("viewService",["$ionicHistory",function ($ionicHistory) {
+    var view = {
+      goBack:goBack,
+      viewHistory:viewHistory,
+      currentView:currentView,
+      removeBackView:removeBackView,
+      clearHistory:clearHistory,
+      clearCache:clearCache
+    };
+    function goBack(backCount) {
+      angular.isNumber(backCount)?$ionicHistory.goBack(backCount):$ionicHistory.goBack();
+    }
+    function viewHistory() {
+      return $ionicHistory.viewHistory();
+    }
+    function currentView() {
+      return $ionicHistory.currentView();
+    }
+    function removeBackView() {
+      $ionicHistory.removeBackView();
+    }
+    function clearHistory() {
+      $ionicHistory.clearHistory();
+    }
+    function clearCache() {
+      return $ionicHistory.clearCache();
+    }
+    return view;
   }])
 ;
 
